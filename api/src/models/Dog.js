@@ -26,6 +26,10 @@ module.exports = (sequelize) => {
     life_span: {
       type: DataTypes.STRING,
       defaultValue: "Andasa"
+    },
+    image_url: {
+      type: DataTypes.STRING,
+      defaultValue: "https://comodibujar.club/wp-content/uploads/2019/03/dibujar-perro-kawaii-1.jpg"
     }
   },{
     timestamps: false
