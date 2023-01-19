@@ -24,9 +24,6 @@ function validate (inputs) {
     else if (inputs.maxLifeSpan <= inputs.minLifeSpan) {
         errors.maxLifeSpan = "Invalid maximum life span"
     }
-    else if (!inputs.message) {
-        errors.message = "Message is missing"
-    }
 
     return errors
 }

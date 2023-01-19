@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true
     },
-    heigth: {
+    height: {
       type: DataTypes.STRING,
       allowNull: false
       //"Entre 23 y 29 cm"
@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       defaultValue: "Andasa"
     },
-    image_url: {
+    image: {
       type: DataTypes.STRING,
       defaultValue: "https://comodibujar.club/wp-content/uploads/2019/03/dibujar-perro-kawaii-1.jpg"
     }

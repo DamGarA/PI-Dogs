@@ -133,12 +133,17 @@ const getTemperaments = async () => {
             })
         }
     });
-    await Promise.all(temperaments.map(name => Temperament.create({name})));
+    //verificar que no existan en la bdd
+    const existingTemperaments = await Temperament.findAll({ where: { name: temperaments } });
+    const existingTemperamentsNames = existingTemperaments.map(temp => temp.name);
+    const newTemperaments = temperaments.filter(temp => !existingTemperamentsNames.includes(temp));
+
+    await Promise.all(newTemperaments.map(name => Temperament.create({ name })));
     return await Temperament.findAll();
 }
 
-const postRace = async (name, heigth, weight, life_span, temperaments) => {
-    const race = await Dog.create({name, heigth, weight, life_span})
+const postRace = async (name, height, weight, life_span, temperaments) => {
+    const race = await Dog.create({name, height, weight, life_span})
     for (const temp of temperaments) {
         const temperament = await Temperament.findOne({ where: { name: temp } });
         await race.addTemperament(temperament);
