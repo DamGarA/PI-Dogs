@@ -1,0 +1,9 @@
+.pageDiv {
+    display: flex;
+    flex-direction: row;
+    max-height: 30px;
+}
+
+.pageInput {
+    max-width: 20px;
+}

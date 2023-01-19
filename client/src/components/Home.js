@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { addAllDogs } from "../redux/actions"
 import Pagination from "./pagination"
-import styled from "styled-components"
+import homeCss from "../css modules/home.module.css"
+import { Link } from "react-router-dom"
 
  function Home() {
     const [page, setPage] = useState(1)
@@ -17,47 +18,33 @@ import styled from "styled-components"
             .then(dogs => {
                 dispatch(addAllDogs(dogs.lista))
             })
-    }, [dispatch])
+    }, [])
 
     return (
         <div>
             <h1>Home</h1>
-            <Pagination page={page} setPage={setPage} max={max}/>
+            <input />
+            <div className={homeCss.racesBlock}>
             {actualState
                 ?.slice((page - 1) * amountPerPage, (page - 1) * amountPerPage + amountPerPage)
                 .map(race => (
-                <RaceDiv>
-                <RaceContent>
-                <EseP>{race.name}</EseP>
-                <RaceImg src={race.image}></RaceImg>
-                </RaceContent>
-                </RaceDiv>
+                <div className={homeCss.racesContainer}>
+                <div className={homeCss.raceContent}>
+                <p>{race.name}</p>
+                <img className={homeCss.raceImg} src={race.image}></img>
+                <p className={homeCss.temp}>Temperaments:{race.temperaments}</p>
+                <p>Weight:{race.weight}</p>
+                </div>
+                </div>
             ))}
+            </div>
+            <div className={homeCss.pagination}>
+                <Pagination page={page} setPage={setPage} max={max}/>
+            </div>
+            <Link to={'/form'}>Form</Link>
         </div>
         
     )
 }
-
-const RaceDiv = styled.div`
-    display: flex;
-    float: left;
-    justify-content: space-around
-`
-
-const RaceContent = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-
-
-const RaceImg = styled.img`
-    max-height:100px;
-    max-width: 100px;
-`
-
-const EseP = styled.p`
-    
-`
 
 export default Home
