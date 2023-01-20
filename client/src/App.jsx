@@ -11,20 +11,12 @@ import { addTemperaments, addAllDogs } from "./redux/actions"
 function App() {
   const dispatch = useDispatch()
 
-  console.log("a")
-
   useEffect(() => {
     fetch('http://localhost:3001/temperaments')
         .then(res => res.json())
         .then(temp => {
             dispatch(addTemperaments(temp.temperaments))
         })
-    
-    // fetch('http://localhost:3001/dogs')
-    //     .then(res => res.json())
-    //     .then(dogs => {
-    //         dispatch(addAllDogs([...dogs.lista]))
-    //     })
 }, [dispatch])
 
   return (

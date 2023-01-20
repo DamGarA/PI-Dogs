@@ -37,6 +37,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     const {name, height, weight, life_span, temperaments} = req.body;
     try {
+        console.log(temperaments)
         if (!name || !height || !weight) return res.status(400).send('Faltan datos para crear');
         const newDog = await postRace(name, height, weight, life_span, temperaments)
         return res.json({message: "Se creo correctamente", dog: newDog})

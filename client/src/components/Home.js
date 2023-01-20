@@ -22,13 +22,33 @@ import { addAllDogs } from "../redux/actions"
         .then(dogs => {
             dispatch(addAllDogs(dogs.lista))
         })
-    setAmountPerPage(8)
-   }, [max])
+        //si vuelve a joder con la carga, habia un "max" en la dependencia
+   }, [])
+
+   const onKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      fetch(`http://localhost:3001/dogs?name=${e.target.value}`)
+        .then(res => res.json())
+        .then(dogs => {
+          console.log(dogs)
+          dispatch(addAllDogs(dogs.lista))
+        })
+    }
+  }
+
+    const resetDogs = () => {
+        fetch('http://localhost:3001/dogs')
+        .then(res => res.json())
+        .then(dogs => {
+            dispatch(addAllDogs(dogs.lista))
+        })
+    }
 
     return (
         <div>
             <h1>Home</h1>
-            <input />
+            <input onKeyDown={(e) => onKeyDown(e)}/>
+            <button onClick={resetDogs}>All dogs</button>
             <div className={homeCss.racesBlock}>
             {actualHomeState?.slice((page - 1) * amountPerPage, (page - 1) * amountPerPage + amountPerPage)
                 .map(race => (

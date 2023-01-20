@@ -145,7 +145,8 @@ const getTemperaments = async () => {
 const postRace = async (name, height, weight, life_span, temperaments) => {
     const race = await Dog.create({name, height, weight, life_span})
     for (const temp of temperaments) {
-        const temperament = await Temperament.findOne({ where: { name: temp } });
+        const temper = temp[0].toUpperCase() + temp.slice(1).toLowerCase()
+        const temperament = await Temperament.findOne({ where: { name: temper } });
         await race.addTemperament(temperament);
     }
     const showRace = await Dog.findByPk(race.id, {

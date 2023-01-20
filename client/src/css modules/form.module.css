@@ -18,27 +18,6 @@
     font-weight: 600;
     margin-top: 30px;
   }
-  
-  /* .input-container {
-    height: 120px;
-    position: relative;
-    width: 100%;
-    margin-top: 40px;
-  }
-  
-  .input {
-    background-color: white;
-    border-radius: 12px;
-    border: 0;
-    box-sizing: border-box;
-    color: black;
-    font-size: 18px;
-    outline: 0;
-    padding: 10px 10px;
-    width: 100%;
-    margin: 15px 0px;
-    
-  } */
 
   .input-container {
     height: 120px;
@@ -102,4 +81,8 @@
     text-align: center;
     margin-top: 20px;
     border-radius: 5px;
+  }
+
+  .temperamentBtn {
+    max-width: 100px;
   }
