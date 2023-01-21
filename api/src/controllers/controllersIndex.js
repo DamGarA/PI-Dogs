@@ -56,7 +56,8 @@ const getRace = async (search) => {
                 height: dog.height.metric,
                 weight: dog.weight.metric,
                 life_span: dog.life_span,
-                image: dog.image.url
+                image: dog.image.url,
+                temperaments: dog.temperament
             }
         })
         return Dog.findAll({
@@ -64,9 +65,28 @@ const getRace = async (search) => {
                 name: {
                     [Op.iLike]: `%${search}%`
                 }
+            },
+            include: [{
+                model: Temperament,
+                attributes: ["name"],
+                through: {
+                    attributes: []
+                }
+            }]
+        }).then(dbDogs => {
+            if (dbDogs.length > 0) {
+                let temp = ""
+                dbDogs.forEach(dog => {
+                    dog.dataValues.temperaments.forEach(obj => {
+                        if (temp == "") temp = temp + obj.name
+                        else temp = temp + ", " + obj.name
+                })
+                    dog.dataValues.temperaments = temp
+                })
             }
-        }).then(res => {
-            const allRaces = res.concat(racesApiModel)
+
+
+            const allRaces = dbDogs.concat(racesApiModel)
             if (allRaces.length > 0) return allRaces
             else throw Error('Not found races')
         })

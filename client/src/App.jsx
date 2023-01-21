@@ -5,11 +5,12 @@ import Landing from './components/Landing';
 import Home from './components/Home';
 import Form from './components/Form';
 import { useDispatch } from 'react-redux'
-import { addTemperaments, addAllDogs } from "./redux/actions"
+import { addTemperaments } from "./redux/actions"
 
 
 function App() {
   const dispatch = useDispatch()
+  let filters = ["none", "none"]
 
   useEffect(() => {
     fetch('http://localhost:3001/temperaments')
@@ -22,7 +23,8 @@ function App() {
   return (
     <BrowserRouter>
       <Route exact path="/" component={Landing} />
-      <Route exact path="/home" component={Home} />
+      <Route exact path="/home" render={(props) => <Home {...props} filters={filters} />} />
+
       <Route exact path="/form" component={Form} />
     </BrowserRouter>
   );

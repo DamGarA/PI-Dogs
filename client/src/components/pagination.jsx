@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import pagCss from "../css modules/pagination.module.css"
 import { next, prev, onChange, onKeyDown } from "./compFunctions/pagFunctions";
 
-function Pagination({page, setPage, max}) {
-    const [value, setValue] = useState(1)
+function Pagination({page, setPage, max, value, setValue}) {
+    // const [value, setValue] = useState(1)
 
     return (
         <div className={pagCss.pageDiv}>

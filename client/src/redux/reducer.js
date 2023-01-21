@@ -1,8 +1,9 @@
-import { ADD_ALL_DOGS, ADD_TEMPERAMENTS} from "./actions.js"
+import { ADD_ALL_DOGS, ADD_TEMPERAMENTS, ORIGINAL_DOGS} from "./actions.js"
 
 const initialState = {
     allDogs: [],
-    allTemperaments: []
+    allTemperaments: [],
+    originalDogs: []
 }
 
  const reducer = (state = initialState, action) => {
@@ -16,6 +17,11 @@ const initialState = {
             return {
                 ...state,
                 allTemperaments: action.payload
+            }
+        case ORIGINAL_DOGS:
+            return {
+                ...state,
+                originalDogs: action.payload
             }
         default:
             return {...state}
