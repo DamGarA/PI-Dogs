@@ -4,6 +4,8 @@ import Pagination from "./pagination"
 import homeCss from "../css modules/home.module.css"
 import { Link } from "react-router-dom"
 import { addAllDogs, originalDogs } from "../redux/actions"
+import Cards from "./Cards"
+import Filters from "./Filters"
 
 
 function Home({ filters }) {
@@ -211,37 +213,10 @@ function Home({ filters }) {
             <button onClick={() => sortByNameAtoZ()}>Sort by name A to Z</button>
             <button onClick={() => sortByNameZtoA()}>Sort by name Z to A</button>
 
-            <label htmlFor="race-selector">Select a race:</label>
-            <input type="radio" id="my-races" name="race" value="my-races" onChange={(e) => filterByOriginAndWeight(e)}/>
-            <label htmlFor="my-races">My races</label>
-            <input type="radio" id="api-races" name="race" value="api-races" onChange={(e) => filterByOriginAndWeight(e)}/>
-            <label htmlFor="api-races">API races</label>
-            <input type="radio" id="none" name="race" value="none-races" onChange={(e) => filterByOriginAndWeight(e)}/>
-            <label htmlFor="none">None races</label>
+            <Filters filterByOriginAndWeight={filterByOriginAndWeight}/>
 
-            <label htmlFor="weight-selector">Select a weight:</label>
-            <input type="radio" id="light-weight" name="weight" value="light-weight" onChange={(e) => filterByOriginAndWeight(e)}/>
-            <label htmlFor="light-weight">Light weight</label>
-            <input type="radio" id="medium-weight" name="weight" value="medium-weight" onChange={(e) => filterByOriginAndWeight(e)}/>
-            <label htmlFor="medium-weight">Medium weight</label>
-            <input type="radio" id="heavy-weight" name="weight" value="heavy-weight" onChange={(e) => filterByOriginAndWeight(e)}/>
-            <label htmlFor="heavy-weight">Heavy weight</label>
-            <input type="radio" id="none-weight" name="weight" value="none-weight" onChange={(e) => filterByOriginAndWeight(e)}/>
-            <label htmlFor="none-weight">None weight</label>
-
-             <div className={homeCss.racesBlock}>
-            {actualHomeState?.slice((page - 1) * amountPerPage, (page - 1) * amountPerPage + amountPerPage)
-                .map(race => (
-                <div className={homeCss.racesContainer}>
-                <div className={homeCss.raceContent}>
-                <p>{race.name}</p>
-                <img className={homeCss.raceImg} src={race.image}></img>
-                <p className={homeCss.temp}>Temperaments:{race.temperaments}</p>
-                <p>Weight:{race.weight}</p>
-                </div>
-                </div>
-            ))}
-            </div>
+            <Cards actualHomeState={actualHomeState} page={page} amountPerPage={amountPerPage}/>
+            
             <div className={homeCss.pagination}>
                 <Pagination page={page} setPage={setPage} max={max} value={value} setValue={setValue}/>
             </div>

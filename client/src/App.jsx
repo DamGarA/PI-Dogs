@@ -4,6 +4,7 @@ import { Route, BrowserRouter } from 'react-router-dom'
 import Landing from './components/Landing';
 import Home from './components/Home';
 import Form from './components/Form';
+import Detail from './components/Detail';
 import { useDispatch } from 'react-redux'
 import { addTemperaments } from "./redux/actions"
 
@@ -26,6 +27,7 @@ function App() {
       <Route exact path="/home" render={(props) => <Home {...props} filters={filters} />} />
 
       <Route exact path="/form" component={Form} />
+      <Route exact path="/detail/:id" component={Detail} />
     </BrowserRouter>
   );
 }
