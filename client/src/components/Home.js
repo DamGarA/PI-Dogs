@@ -19,17 +19,31 @@ function Home({ filters }) {
         max = Math.ceil(actualHomeState.length / amountPerPage);
     }
 
-    useEffect(() => {
-        if (actualHomeState.length == 0) {
-        fetch('http://localhost:3001/dogs')
-            .then(res => res.json())
-            .then(dogs => {
-                dispatch(addAllDogs(dogs.lista))
-                dispatch(originalDogs(dogs.lista))
+//     useEffect(() => {
+//         if (actualHomeState.length == 0) {
+//         fetch('http://localhost:3001/dogs')
+//             .then(res => res.json())
+//             .then(dogs => {
+//                 dispatch(addAllDogs(dogs.lista))
+//                 dispatch(originalDogs(dogs.lista))
                 
-            })
-        }
-   }, [])
+//             })
+//         }
+//    }, [])
+
+    useEffect(() => {
+
+    }, [actualHomeState])
+
+   if (actualHomeState.length == 0) {
+    fetch('http://localhost:3001/dogs')
+        .then(res => res.json())
+        .then(dogs => {
+            dispatch(addAllDogs(dogs.lista))
+            dispatch(originalDogs(dogs.lista))
+            
+        })
+    }
 
     const onKeyDownSearchRace = (e) => {
         if (e.keyCode === 13) {
@@ -64,18 +78,30 @@ function Home({ filters }) {
                 
                 dispatch(addAllDogs(dogs.lista))
                 dispatch(originalDogs(dogs.lista))
+                // const a = {target:{value:"none-races"}}
+                // const b = {target:{value:"none-weight"}}
+                // filterByOriginAndWeight(a)
+                // filterByOriginAndWeight(b)
         })
     }
-
-    //averrr
     
     const myRaces =  originalDogsState.filter(race => race.id < 300)
     const apiRaces =  originalDogsState.filter(race => race.id > 300)
-    const lightWeight =  originalDogsState.filter(dog => dog.weight[0] < 3)
-    const mediumWeight =  originalDogsState.filter(dog => dog.weight[0] >= 3 && dog.weight[0] <= 7)
-    const heavyWeight =  originalDogsState.filter(dog => dog.weight[0] > 7)
+    const lightWeight =  originalDogsState.filter(dog => {
+        const numberWeight = parseInt(dog.weight.substr(-2).trim())
+        return numberWeight < 12
+    })
+    const mediumWeight =  originalDogsState.filter(dog => {
+        const numberWeight = parseInt(dog.weight.substr(-2).trim())
+        return numberWeight >= 12 && numberWeight <= 30
+    })
+    const heavyWeight =  originalDogsState.filter(dog => {
+        const numberWeight = parseInt(dog.weight.substr(-2).trim())
+        return numberWeight > 30
+    })
 
-    const filterByOrigin = (e) => {
+    const filterByOriginAndWeight = (e) => {
+       
         switch (e.target.value) {
             case "my-races":
                 filters[0] = [...myRaces];
@@ -83,31 +109,33 @@ function Home({ filters }) {
             case "api-races":
                 filters[0] = [...apiRaces]
                 break;
+            case "none-races":
+                filters[0] = [...myRaces, ...apiRaces]
+                break;
             case "light-weight":
                 filters[1] = [...lightWeight]
                 break;
             case "medium-weight":
-                console.log(mediumWeight)
                 filters[1] = [...mediumWeight]
                 break;
             case "heavy-weight":
-                console.log(heavyWeight)
                 filters[1] = [...heavyWeight]
+                break;
+            case "none-weight":
+                filters[1] = [...lightWeight, ...mediumWeight, ...heavyWeight]
                 break;
         }
        
-        
         let show = []
+        
         if (filters[0] != "none") {
             show[0] = [...filters[0]]
         }
-      
         if (filters[1] != "none") {
             show[1] = [...filters[1]]
         }
-
         if (show[0] && show[1]) {
-            let show2 = show[0].filter(race1 => show[1].includes(race1))
+            let show2 = show[0].filter(race1 => show[1].find(race2 => race2.id === race1.id));
             dispatch(addAllDogs(show2))
         }
         else if (show[0]) {
@@ -115,36 +143,93 @@ function Home({ filters }) {
         }
         else if (show[1]) {
             dispatch(addAllDogs(show[1]))
-        }
-        
-        
-        
+        }   
     }
-    //averrrr
+
+    const sortByWeightMinToMax = () => {
+       actualHomeState.sort(function(a, b) {
+            const aWeight = parseInt(a.weight.substr(-2).trim())
+            const bWeight = parseInt(b.weight.substr(-2).trim())
+          return aWeight - bWeight;
+        });
+        const newArray = [...actualHomeState]
+        dispatch(addAllDogs(newArray))
+    }
+
+    const sortByWeightMaxToMin = () => {
+        actualHomeState.sort(function(a, b) {
+            const aWeight = parseInt(a.weight.substr(-2).trim())
+            const bWeight = parseInt(b.weight.substr(-2).trim())
+            return bWeight - aWeight;
+        });
+        const newArray = [...actualHomeState]
+        dispatch(addAllDogs(newArray))
+    }
+
+    const sortByNameAtoZ = () => {
+        actualHomeState.sort(function(a, b) {
+            const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+            const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            // names must be equal
+            return 0;
+        });
+        const newArray = [...actualHomeState]
+        dispatch(addAllDogs(newArray))
+    }     
+
+    const sortByNameZtoA = () => {
+        actualHomeState.sort(function(a, b) {
+            const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+            const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+            if (nameA > nameB) {
+              return -1;
+            }
+            if (nameA < nameB) {
+              return 1;
+            }
+            // names must be equal
+            return 0;
+        });
+        const newArray = [...actualHomeState]
+        dispatch(addAllDogs(newArray))
+    }
+    
     return (
         <div>
             <h1>Home</h1>
             <input onKeyDown={(e) => onKeyDownSearchRace(e)} placeholder="Search race..."/>
             <input onKeyDown={(e) => onKeyDownSearchTemperament(e)} placeholder="Search temperament"/>
             <button onClick={() => resetDogs()}>All dogs</button>
+            <button onClick={() => sortByWeightMinToMax()}>Sort ascending by weight</button>
+            <button onClick={() => sortByWeightMaxToMin()}>Sort descending by weight</button>
+            <button onClick={() => sortByNameAtoZ()}>Sort by name A to Z</button>
+            <button onClick={() => sortByNameZtoA()}>Sort by name Z to A</button>
 
             <label htmlFor="race-selector">Select a race:</label>
-            <input type="radio" id="my-races" name="race" value="my-races" onChange={(e) => filterByOrigin(e)}/>
+            <input type="radio" id="my-races" name="race" value="my-races" onChange={(e) => filterByOriginAndWeight(e)}/>
             <label htmlFor="my-races">My races</label>
-            <input type="radio" id="api-races" name="race" value="api-races" onChange={(e) => filterByOrigin(e)}/>
+            <input type="radio" id="api-races" name="race" value="api-races" onChange={(e) => filterByOriginAndWeight(e)}/>
             <label htmlFor="api-races">API races</label>
-            <input type="radio" id="none" name="race" value="none" onChange={(e) => filterByOrigin(e)}/>
-            <label htmlFor="none">None</label>
+            <input type="radio" id="none" name="race" value="none-races" onChange={(e) => filterByOriginAndWeight(e)}/>
+            <label htmlFor="none">None races</label>
 
             <label htmlFor="weight-selector">Select a weight:</label>
-            <input type="radio" id="light-weight" name="weight" value="light-weight" onChange={(e) => filterByOrigin(e)}/>
+            <input type="radio" id="light-weight" name="weight" value="light-weight" onChange={(e) => filterByOriginAndWeight(e)}/>
             <label htmlFor="light-weight">Light weight</label>
-            <input type="radio" id="medium-weight" name="weight" value="medium-weight" onChange={(e) => filterByOrigin(e)}/>
+            <input type="radio" id="medium-weight" name="weight" value="medium-weight" onChange={(e) => filterByOriginAndWeight(e)}/>
             <label htmlFor="medium-weight">Medium weight</label>
-            <input type="radio" id="heavy-weight" name="weight" value="heavy-weight" onChange={(e) => filterByOrigin(e)}/>
+            <input type="radio" id="heavy-weight" name="weight" value="heavy-weight" onChange={(e) => filterByOriginAndWeight(e)}/>
             <label htmlFor="heavy-weight">Heavy weight</label>
+            <input type="radio" id="none-weight" name="weight" value="none-weight" onChange={(e) => filterByOriginAndWeight(e)}/>
+            <label htmlFor="none-weight">None weight</label>
 
-            <div className={homeCss.racesBlock}>
+             <div className={homeCss.racesBlock}>
             {actualHomeState?.slice((page - 1) * amountPerPage, (page - 1) * amountPerPage + amountPerPage)
                 .map(race => (
                 <div className={homeCss.racesContainer}>
