@@ -13,14 +13,14 @@ function Detail () {
             setRaceId(race.race[0])
             console.log(race)
         })
-    }, [])
+    }, [id])
 
     return (
         <>
         {raceId &&  <div className={homeCss.racesContainer}>
                         <div className={homeCss.raceContent}>
                             <p>{raceId.name}</p>
-                            <img className={homeCss.raceImg} src={raceId.image}></img>
+                            <img className={homeCss.raceImg} src={raceId.image} alt="Race"></img>
                             <p className={homeCss.temp}>Temperaments:{raceId.temperaments}</p>
                             <p>Weight:{raceId.weight}</p>
                         </div>

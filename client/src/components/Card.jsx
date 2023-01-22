@@ -8,7 +8,7 @@ function Card ({name, image, temperaments, weight, id}) {
             <div className={homeCss.racesContainer}>
                 <div className={homeCss.raceContent}>
                 <Link to={`/detail/${id}`}>{name}</Link>
-                <img className={homeCss.raceImg} src={image}></img>
+                <img className={homeCss.raceImg} src={image} alt="Race"></img>
                 <p className={homeCss.temp}>Temperaments:{temperaments}</p>
                 <p>Weight:{weight}</p>
                 </div>

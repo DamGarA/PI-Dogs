@@ -12,7 +12,7 @@ function Home({ filters }) {
     const dispatch = useDispatch()
     const [page, setPage] = useState(1)
     const [value, setValue] = useState(1)
-    const [amountPerPage, setAmountPerPage] = useState(8)
+    const [amountPerPage] = useState(8)
     const actualHomeState = useSelector(state => state.allDogs)
     const originalDogsState = useSelector(state => state.originalDogs)
 
@@ -21,31 +21,17 @@ function Home({ filters }) {
         max = Math.ceil(actualHomeState.length / amountPerPage);
     }
 
-//     useEffect(() => {
-//         if (actualHomeState.length == 0) {
-//         fetch('http://localhost:3001/dogs')
-//             .then(res => res.json())
-//             .then(dogs => {
-//                 dispatch(addAllDogs(dogs.lista))
-//                 dispatch(originalDogs(dogs.lista))
-                
-//             })
-//         }
-//    }, [])
-
     useEffect(() => {
-
-    }, [actualHomeState])
-
-   if (actualHomeState.length == 0) {
-    fetch('http://localhost:3001/dogs')
-        .then(res => res.json())
-        .then(dogs => {
-            dispatch(addAllDogs(dogs.lista))
-            dispatch(originalDogs(dogs.lista))
-            
-        })
-    }
+        if (actualHomeState.length === 0) {
+            fetch('http://localhost:3001/dogs')
+                .then(res => res.json())
+                .then(dogs => {
+                    dispatch(addAllDogs(dogs.lista))
+                    dispatch(originalDogs(dogs.lista))
+                    
+                })
+            }
+    }, [dispatch, actualHomeState])
 
     const onKeyDownSearchRace = (e) => {
         if (e.keyCode === 13) {
@@ -53,7 +39,7 @@ function Home({ filters }) {
                 .then(res => res.json())
                 .then(dogs => {
                     const newArray = dogs.lista.filter(elem1=> {
-                        return actualHomeState.some(elem2 => elem1.name == elem2.name)
+                        return actualHomeState.some(elem2 => elem1.name === elem2.name)
                     });
                     setPage(1)
                     setValue(1)
@@ -63,11 +49,12 @@ function Home({ filters }) {
     }
 
     const onKeyDownSearchTemperament = (e) => {
-        if (e.keyCode == 13) {
+        if (e.keyCode === 13) {
             const newArray = actualHomeState.filter(dog => {
                 if (dog.temperaments) {
                     return dog.temperaments.toUpperCase().includes(e.target.value.toUpperCase())
                 }
+                return false
             })
             dispatch(addAllDogs(newArray))
         }
@@ -126,14 +113,16 @@ function Home({ filters }) {
             case "none-weight":
                 filters[1] = [...lightWeight, ...mediumWeight, ...heavyWeight]
                 break;
+            default:
+                return
         }
        
         let show = []
         
-        if (filters[0] != "none") {
+        if (filters[0] !== "none") {
             show[0] = [...filters[0]]
         }
-        if (filters[1] != "none") {
+        if (filters[1] !== "none") {
             show[1] = [...filters[1]]
         }
         if (show[0] && show[1]) {

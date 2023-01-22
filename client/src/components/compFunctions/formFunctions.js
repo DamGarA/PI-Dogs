@@ -62,7 +62,7 @@ const showTemperaments = (temper, setTemper, setInputs, inputs) => {
 
  const deleteTemp = (tempName, setTemper, setInputs,temper) => {
      setTemper(temper.filter(temp => temp !== tempName))
-     setInputs(prevInputs => ({...prevInputs, ["temperament"]: ""}))
+     setInputs(prevInputs => ({...prevInputs, temperament: ""}))
 
  }
 
@@ -70,7 +70,7 @@ const showTemperaments = (temper, setTemper, setInputs, inputs) => {
     const tempTemperament = e.target.value;
     setInputs({...inputs, [e.target.name]: tempTemperament});
     actualFormState?.forEach(temp => {
-        if (temp.name.toUpperCase() == tempTemperament.toUpperCase()) {
+        if (temp.name.toUpperCase() === tempTemperament.toUpperCase()) {
             const saveTemper = tempTemperament[0].toUpperCase() + tempTemperament.slice(1).toLowerCase()
             if (!temper.includes(saveTemper)) setTemper([...temper, `${saveTemper}`])
         } 
