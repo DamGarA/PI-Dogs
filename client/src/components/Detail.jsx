@@ -10,8 +10,7 @@ function Detail () {
         fetch(`http://localhost:3001/dogs/${id}`)
         .then(res => res.json())
         .then(race => {
-            setRaceId(race.race[0])
-            console.log(race)
+            setRaceId(race.race)
         })
     }, [id])
 

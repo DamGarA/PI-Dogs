@@ -31,10 +31,11 @@ const getDogs =  async () => {
                     let temp = ""
                     dbDogs.forEach(dog => {
                         dog.dataValues.temperaments.forEach(obj => {
-                            if (temp == "") temp = temp + obj.name
-                            else temp = temp + ", " + obj.name
+                                if (temp == "") temp = temp + obj.dataValues.name
+                                else temp = temp + ", " + obj.dataValues.name      
                     })
                         dog.dataValues.temperaments = temp
+                        temp = ""
                     })
                 }
                 const allDogs = dbDogs.concat(api_dogs)
@@ -98,20 +99,17 @@ const getRacesById = async (id) => {
     return fetch(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
         .then(response => response.json())
         .then(data => {
-            const api_race = data.filter(dog => dog.id + 300 == id)
-            if (api_race.length > 0) {
-                const raceApiModel = api_race.map(dog => {
+            const api_race = data.find(dog => dog.id + 300 == id)
+            if (api_race) {
                     return {
-                        id: dog.id + 300,
-                        name: dog.name,
-                        height: dog.height.metric,
-                        weight: dog.weight.metric,
-                        life_span: dog.life_span,
-                        image: dog.image.url,
-                        temperaments: dog.temperament
+                        id: api_race.id + 300,
+                        name: api_race.name,
+                        height: api_race.height.metric,
+                        weight: api_race.weight.metric,
+                        life_span: api_race.life_span,
+                        image: api_race.image.url,
+                        temperaments: api_race.temperament
                     }
-                })
-                return raceApiModel
             } else {
                 return Dog.findByPk(id, {
                     include: [{
@@ -162,13 +160,34 @@ const getTemperaments = async () => {
     return await Temperament.findAll();
 }
 
+// const postRace = async (name, height, weight, life_span, temperaments) => {
+//     const race = await Dog.create({name, height, weight, life_span})
+//     for (const temp of temperaments) {
+//         const temper = temp[0].toUpperCase() + temp.slice(1).toLowerCase()
+//         const temperament = await Temperament.findOne({ where: { name: temper } });
+//         await race.addTemperament(temperament);
+//     }
+//     const showRace = await Dog.findByPk(race.id, {
+//         include: [{
+//             model: Temperament,
+//             attributes: ["id", "name"],
+//             through: {
+//                 attributes: []
+//             }
+//         }]
+//     })
+//     return showRace
+// }
+
 const postRace = async (name, height, weight, life_span, temperaments) => {
     const race = await Dog.create({name, height, weight, life_span})
+    const temperamentInstances = []
     for (const temp of temperaments) {
         const temper = temp[0].toUpperCase() + temp.slice(1).toLowerCase()
         const temperament = await Temperament.findOne({ where: { name: temper } });
-        await race.addTemperament(temperament);
+        temperamentInstances.push(temperament)
     }
+    await race.setTemperaments(temperamentInstances)
     const showRace = await Dog.findByPk(race.id, {
         include: [{
             model: Temperament,
@@ -180,6 +199,7 @@ const postRace = async (name, height, weight, life_span, temperaments) => {
     })
     return showRace
 }
+
 
 module.exports = {
     getDogs,

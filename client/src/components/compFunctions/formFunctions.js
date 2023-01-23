@@ -9,22 +9,22 @@ function validate (inputs) {
     else if (!/^[a-zA-Z]+$/.test(inputs.name)) {
         errors.name = "Invalid name, only letters are allowed"
     }
-    else if (inputs.minWeight < 1) {
+    else if (parseInt(inputs.minWeight) < 1 && inputs.minWeight !== "") {  
         errors.minWeight = "Invalid minimum weight"
     }
-    else if (inputs.maxWeight <= inputs.minWeight) {
+    else if (parseInt(inputs.maxWeight) <= parseInt(inputs.minWeight) && inputs.maxWeight !== "") {
         errors.minWeight = "Invalid maximum weight"
     }
-    else if (inputs.minHeight < 1) {
+    else if (parseInt(inputs.minHeight) < 1 && inputs.minHeight !== "") {
         errors.minHeight = "Invalid minimum height"
     }
-    else if (inputs.maxHeight <= inputs.minHeight) {
+    else if (parseInt(inputs.maxHeight) <= parseInt(inputs.minHeight) && inputs.maxHeight) {
         errors.minHeight = "Invalid maximum height"
     }
-    else if (inputs.minLifeSpan < 1) {
+    else if (parseInt(inputs.minLifeSpan) < 1 && inputs.minLifeSpan !== "") {
         errors.minLifeSpan = "Invalid minimum life span"
     }
-    else if (inputs.maxLifeSpan <= inputs.minLifeSpan) {
+    else if (parseInt(inputs.maxLifeSpan) <= parseInt(inputs.minLifeSpan) && inputs.maxLifeSpan) {
         errors.maxLifeSpan = "Invalid maximum life span"
     }
 
@@ -51,12 +51,12 @@ const divMinMax = (minValue, maxValue, placeHolder, inputs, setInputs, setErrors
 }
 
 const errorMessage = (errorValue, errors) => {
-    return errorValue.map(val => errors[val] && <p className={formStyles.warningP}>{errors[val]}</p>)
+    return errorValue.map((val, index) => errors[val] && <p key={index} className={formStyles.warningP}>{errors[val]}</p>)
 }
 
 const showTemperaments = (temper, setTemper, setInputs, inputs) => {
-    return temper.map(tempName => {
-        return <button className={formStyles.temperamentBtn} onClick={() => deleteTemp(tempName, setTemper, setInputs, temper)}>{tempName}</button>
+    return temper.map((tempName, index) => {
+        return <button key={index} className={formStyles.temperamentBtn} onClick={() => deleteTemp(tempName, setTemper, setInputs, temper)}>{tempName}</button>
     })
  }
 
@@ -72,17 +72,21 @@ const showTemperaments = (temper, setTemper, setInputs, inputs) => {
     actualFormState?.forEach(temp => {
         if (temp.name.toUpperCase() === tempTemperament.toUpperCase()) {
             const saveTemper = tempTemperament[0].toUpperCase() + tempTemperament.slice(1).toLowerCase()
-            if (!temper.includes(saveTemper)) setTemper([...temper, `${saveTemper}`])
+            if (!temper.includes(saveTemper)) {
+                setTemper([...temper, `${saveTemper}`])
+            }
         } 
     });
    
 }
 
-const postData = (e, inputs, temper) => {
+const postData = (e, inputs, temper, setTemper, setErrors, setShowCreated) => {
     e.preventDefault()
+    if (inputs.name && inputs.minWeight && inputs.maxWeight && inputs.minHeight && inputs.maxHeight && inputs.minLifeSpan && inputs.maxLifeSpan) {
     const weight = `${inputs.minWeight} - ${inputs.maxWeight}`;
     const height = `${inputs.minHeight} - ${inputs.maxHeight}`;
     const life_span = `${inputs.minLifeSpan} - ${inputs.maxLifeSpan}`;
+
     fetch('http://localhost:3001/dogs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -94,12 +98,21 @@ const postData = (e, inputs, temper) => {
             temperaments: temper
         })
     })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data)
-        //aca puedo hacer algo con la raza recien creada
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(res.statusText);
+        }
+        return res.json();
     })
-    .catch(err => console.log(err))
+    .then(data => {       
+        setShowCreated({...data.dog})
+    })
+    .catch(() => {
+        console.log("entro al catch");
+        setErrors({dataComplete:"Ya existe esa raza weom"})
+    })
+    }
+    else setErrors({dataComplete:"Faltan datos wey"})
 }
 
 export {validate, handleChanges, divMinMax, errorMessage, showTemperaments, searchTemperament, postData}

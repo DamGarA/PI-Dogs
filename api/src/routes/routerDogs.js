@@ -7,6 +7,7 @@ const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
+
 router.get("/", async (req, res) => {
     const { name } = req.query
     try {
@@ -37,12 +38,11 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     const {name, height, weight, life_span, temperaments} = req.body;
     try {
-        console.log(temperaments)
         if (!name || !height || !weight) return res.status(400).send('Faltan datos para crear');
         const newDog = await postRace(name, height, weight, life_span, temperaments)
         return res.json({message: "Se creo correctamente", dog: newDog})
     } catch (error) {
-        return res.status(400).json({error: error.message})
+        return res.status(404).json({error: error.message})
     }
 })
 
