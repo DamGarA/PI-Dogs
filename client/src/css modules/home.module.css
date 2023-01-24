@@ -1,3 +1,43 @@
+.totalHome {
+    background-color: skyblue;
+}
+
+@font-face {
+    font-family: 'aAlloyInk';
+    src: url('./others/aAlloyInk.ttf') format('truetype');
+  }
+
+h1 {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+	text-align: center;
+	font-weight: normal;
+    font-family: aAlloyInk;
+    font-size: 7vw;
+	width: 50%;
+    max-height: 300px;
+	text-align: center;
+	margin: auto;
+    padding-top: 6px;
+    border-radius: 10px;
+    border: 1px solid #000; 
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+	background: linear-gradient(
+		-45deg, 
+		#4bc0c8 25%, 
+		#5e6b6e 25%, 
+		#283235 50%, 
+		#75c5cb 50%, 
+		#17a3ad 75%, 
+		#607178 75%, 
+		#1f272a);	
+	background-position: 0 0;
+	animation: stripes 1s linear infinite;
+    transform: translateY(-30px);
+}	
+
 .racesBlock {
     display: flex;
     flex-wrap: wrap;
@@ -34,4 +74,63 @@
     width: 100px;
     word-wrap: break-word;
 }
+
+/* searchs */
+
+.span_father {
+    position: relative;
+}
+
+.basic_slide {
+    display: inline-block;
+    width: 215px;
+    padding: 10px 0 10px 15px;
+    font-family: "Open Sans", sans;
+    font-weight: 400;
+    color: #377d6a;
+    background: #efefef;
+    border: 0;
+    border-radius: 3px;
+    outline: 0;
+    text-indent: 70px;
+    transition: all 0.3s ease-in-out;
+    margin-left: 50px;
+}
+.basic_slide::-webkit-input-placeholder {
+    color: #efefef;
+    text-indent: 0;
+    font-weight: 300;
+}
+.basic_slide + label {
+    display: inline-block;
+    position: absolute;
+    top: -2px;
+    left: 55px;
+    height: 10px;
+    padding: 10px 15px;
+    text-shadow: 0 1px 0 rgba(19, 74, 70, .4);
+    background: #2ac3ce;
+    transition: all 0.3s ease-in-out;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    font-family: aAlloyInk;
+}
+.basic_slide:focus, .basic_slide:active {
+    color: #377d6a;
+    text-indent: 0;
+    background: #fff;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.basic_slide:focus::-webkit-input-placeholder, .basic_slide:active::-webkit-input-placeholder {
+    color: #aaa;
+}
+.basic_slide:focus + label, .basic_slide:active + label {
+    transform: translateY(-100%);
+}
+
+
+
+
+
 

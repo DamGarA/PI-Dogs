@@ -1,0 +1,57 @@
+.card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 20%;
+    max-height: 300px;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    background-image: url('./others/fondo\ huellas\ de\ perro.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 5px;
+  }
+  
+  .raceContent {
+    flex-basis: 100%;
+  }
+  
+  .card_name {
+    flex-basis: 100%;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .card_name a {
+    color: #000;
+    text-decoration: none;
+  }
+  
+    .card_image {
+        flex-basis: 100%;
+        margin-right: 1rem;
+        object-fit: cover;
+        width: 100%;
+        height: 200px;
+    }
+
+  .card_temperaments {
+    flex-basis: 60%;
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .temperament {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #666;
+  }
+  
+  p {
+    margin-bottom: 0.25rem;
+  }
+  
+  

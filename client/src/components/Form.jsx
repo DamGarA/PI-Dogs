@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import formStyles from "../css modules/form.module.css"
 import { handleChanges, divMinMax, errorMessage, showTemperaments, searchTemperament,postData } from "./compFunctions/formFunctions.js";
 import { useSelector } from 'react-redux'
@@ -50,7 +49,6 @@ function Form () {
         
         </form>
         {temper.length && showTemperaments(temper, setTemper, setInputs, inputs)}
-        <Link to={'/home'}>Home</Link>
         {showCreated && <div>
                             <p>Name:{showCreated.name}</p>
                             <p>Weight:{showCreated.weight}</p>

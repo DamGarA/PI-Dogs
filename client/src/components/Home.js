@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import Pagination from "./pagination"
 import homeCss from "../css modules/home.module.css"
-import { Link } from "react-router-dom"
 import { addAllDogs, originalDogs } from "../redux/actions"
 import Cards from "./Cards"
 import Filters from "./Filters"
@@ -13,6 +12,7 @@ function Home({ filters }) {
     const [page, setPage] = useState(1)
     const [value, setValue] = useState(1)
     const [amountPerPage] = useState(8)
+    const [notFound, setNotFound] = useState(false)
     const actualHomeState = useSelector(state => state.allDogs)
     const originalDogsState = useSelector(state => state.originalDogs)
 
@@ -31,7 +31,7 @@ function Home({ filters }) {
                     
                 })
             }
-    }, [dispatch, actualHomeState])
+    }, [])
 
     const onKeyDownSearchRace = (e) => {
         if (e.keyCode === 13) {
@@ -90,7 +90,6 @@ function Home({ filters }) {
     })
 
     const filterByOriginAndWeight = (e) => {
-       
         switch (e.target.value) {
             case "my-races":
                 filters[0] = [...myRaces];
@@ -127,7 +126,11 @@ function Home({ filters }) {
         }
         if (show[0] && show[1]) {
             let show2 = show[0].filter(race1 => show[1].find(race2 => race2.id === race1.id));
+           if (show2.length === 0) setNotFound(true)
+           else {
             dispatch(addAllDogs(show2))
+            setNotFound(false)
+            }            
         }
         else if (show[0]) {
             dispatch(addAllDogs(show[0]))
@@ -159,8 +162,8 @@ function Home({ filters }) {
 
     const sortByNameAtoZ = () => {
         actualHomeState.sort(function(a, b) {
-            const nameA = a.name.toUpperCase(); // ignore upper and lowercase
-            const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+            const nameA = a.name.toUpperCase(); 
+            const nameB = b.name.toUpperCase(); 
             if (nameA < nameB) {
               return -1;
             }
@@ -192,10 +195,18 @@ function Home({ filters }) {
     }
     
     return (
-        <div>
-            <h1>Home</h1>
-            <input onKeyDown={(e) => onKeyDownSearchRace(e)} placeholder="Search race..."/>
-            <input onKeyDown={(e) => onKeyDownSearchTemperament(e)} placeholder="Search temperament"/>
+        <div className={homeCss.totalHome}>
+            <h1>Dog Breeds!</h1>
+            <span className={homeCss.span_father}>
+            <input className={homeCss.basic_slide} onKeyDown={(e) => onKeyDownSearchRace(e)} placeholder="Search breed..."/>
+            <label for="name ">Breed</label>
+            </span>
+            
+            <span className={homeCss.span_father}>
+            <input className={homeCss.basic_slide} onKeyDown={(e) => onKeyDownSearchTemperament(e)} placeholder="Search temperament..."/>
+            <label for="name ">Temps.</label>
+            </span>
+
             <button onClick={() => resetDogs()}>All dogs</button>
             <button onClick={() => sortByWeightMinToMax()}>Sort ascending by weight</button>
             <button onClick={() => sortByWeightMaxToMin()}>Sort descending by weight</button>
@@ -204,12 +215,13 @@ function Home({ filters }) {
 
             <Filters filterByOriginAndWeight={filterByOriginAndWeight}/>
 
+            {notFound && <p>No se encontraron razas</p>}
+
             <Cards actualHomeState={actualHomeState} page={page} amountPerPage={amountPerPage}/>
             
             <div className={homeCss.pagination}>
                 <Pagination page={page} setPage={setPage} max={max} value={value} setValue={setValue}/>
             </div>
-            <Link to={'/form'}>Form</Link>
         </div>
         
     )

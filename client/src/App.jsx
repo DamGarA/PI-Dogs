@@ -5,6 +5,7 @@ import Landing from './components/Landing';
 import Home from './components/Home';
 import Form from './components/Form';
 import Detail from './components/Detail';
+import NavBar from './components/NavBar';
 import { useDispatch } from 'react-redux'
 import { addTemperaments } from "./redux/actions"
 
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <NavBar/>
       <Route exact path="/" component={Landing} />
       <Route exact path="/home" render={(props) => <Home {...props} filters={filters} />} />
 
