@@ -6,7 +6,7 @@ import '../App.css';
     return (
         <>
         <div className="App">
-            <h1>Henry Dogs</h1>
+            <h2>Henry Dogs</h2>
         </div>
         <Link to={"/home"}><button>home</button></Link>
         </>

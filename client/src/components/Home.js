@@ -207,14 +207,14 @@ function Home({ filters }) {
             <label for="name ">Temps.</label>
             </span>
 
-            <button onClick={() => resetDogs()}>All dogs</button>
-            <button onClick={() => sortByWeightMinToMax()}>Sort ascending by weight</button>
-            <button onClick={() => sortByWeightMaxToMin()}>Sort descending by weight</button>
-            <button onClick={() => sortByNameAtoZ()}>Sort by name A to Z</button>
-            <button onClick={() => sortByNameZtoA()}>Sort by name Z to A</button>
+            <button className={homeCss.btn_sort} onClick={() => resetDogs()}>All dogs</button>
+            <button className={homeCss.btn_sort} onClick={() => sortByWeightMinToMax()}>Weight asc.</button>
+            <button className={homeCss.btn_sort} onClick={() => sortByWeightMaxToMin()}>Weight desc.</button>
+            <button className={homeCss.btn_sort} onClick={() => sortByNameAtoZ()}>A to Z</button>
+            <button className={homeCss.btn_sort} onClick={() => sortByNameZtoA()}> Z to A</button>
 
             <Filters filterByOriginAndWeight={filterByOriginAndWeight}/>
-
+    
             {notFound && <p>No se encontraron razas</p>}
 
             <Cards actualHomeState={actualHomeState} page={page} amountPerPage={amountPerPage}/>

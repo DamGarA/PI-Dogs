@@ -23,10 +23,11 @@ function Form () {
     const [showCreated, setShowCreated] = useState(false)
 
     return (
-    <div>
+    <div className={formStyles.allForm}>
+        
+        <img src='https://wallpapershome.com/images/pages/pic_h/1533.jpg' alt='daece' className={formStyles.img_dog}></img>
         <form className={formStyles.form} onSubmit={(e) => postData(e, inputs, temper, setTemper, setErrors, setShowCreated)}>
-        <label className={formStyles.title}>Race attributes</label>
-        <p></p>
+        <label className={formStyles.title}>Create Breed</label>
         <div className={formStyles.inputcontainer}>
         <input name="name" type="text" value={inputs.name} onChange={(e) => handleChanges(e, setInputs, setErrors, inputs)}
         className={formStyles.input} placeholder="Race name..."/>

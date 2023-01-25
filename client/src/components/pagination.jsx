@@ -6,15 +6,15 @@ function Pagination({page, setPage, max, value, setValue}) {
 
     return (
         <div className={pagCss.pageDiv}>
-            <button onClick={() => prev(page, setPage, value, setValue, max)}>Prev.</button>
+            <button className={pagCss.btn_prev_next} onClick={() => prev(page, setPage, value, setValue, max)}>Prev.</button>
             <input 
                 className={pagCss.pageInput} 
                 value={value} 
                 onChange={(e) => onChange(e, setValue)} 
                 onKeyDown={(e) => onKeyDown(e, setPage, max)}
             />
-            <p>de {max}</p>
-            <button onClick={() => next(page, setPage, value, setValue, max)}>Next</button>
+            <p className={pagCss.pagP}>de {max}</p>
+            <button className={pagCss.btn_prev_next} onClick={() => next(page, setPage, value, setValue, max)}>Next</button>
         </div>
     )
 }

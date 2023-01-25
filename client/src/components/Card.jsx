@@ -7,15 +7,20 @@ function Card ({name, image, temperaments, weight, id}) {
         
             <div className={cardCss.card}>
                 <div className={cardCss.raceContent}>
-                <h2 className={cardCss.card_name}>
-                <Link to={`/detail/${id}`} >{name}</Link>
-                </h2>
-                <img className={cardCss.card_image} src={image} alt="Race"></img>
-                <h3>Temperaments:</h3>
-                <ul className={cardCss.card_temperaments}>
-                    {typeof temperaments == "string" && temperaments.split(", ").map((temp, index) => <p key={index} className={cardCss.temperament}>{temp}</p>)}
-                </ul>
-                <p>Weight:{weight}</p>
+                    <div className={cardCss.divName}>
+                        <h2 className={cardCss.card_name}>
+                            <Link to={`/detail/${id}`} >{name}</Link>
+                        </h2>
+                    </div>
+                    <img className={cardCss.card_image} src={image} alt="Race"></img>
+                    <div className={cardCss.divTemp}>
+                        <h3 className={cardCss.h3Temp}>Temperaments:</h3>
+                        <p className={cardCss.pTemp}>{temperaments}</p>
+                    </div>
+                    <div className={cardCss.divWeight}>
+                        <h3 className={cardCss.h3Weight}>Weight:</h3>
+                        <p className={cardCss.pWeight}>{weight}</p>
+                    </div>
                 </div>
             </div>
         
