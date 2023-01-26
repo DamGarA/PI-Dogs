@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
-import homeCss from "../css modules/home.module.css"
+import detailStyles from "../css modules/detail.module.css"
 
 function Detail () {
     const [raceId, setRaceId] = useState(null)
@@ -16,16 +16,22 @@ function Detail () {
 
     return (
         <>
-        {raceId &&  <div className={homeCss.racesContainer}>
-                        <div className={homeCss.raceContent}>
-                            <p>{raceId.name}</p>
-                            <img className={homeCss.raceImg} src={raceId.image} alt="Race"></img>
-                            <p className={homeCss.temp}>Temperaments:{raceId.temperaments}</p>
-                            <p>Weight:{raceId.weight}</p>
+        {raceId &&  <div className={detailStyles.allDetail}>
+                        <img className={detailStyles.detail_img} src={raceId.image} alt="Race"></img>
+                        <div className={detailStyles.detailAttributes}>
+                            <p className={detailStyles.detailTitle}>{raceId.name}</p>
+                           
+                            <p className={detailStyles.p_detail_title}>Temperaments:</p>
+                            <p className={detailStyles.p_detail_value}>{raceId.temperaments}</p>
+                            <p className={detailStyles.p_detail_title}>Weight:</p>
+                            <p className={detailStyles.p_detail_value}>{raceId.weight} kg.</p>
+                            <p className={detailStyles.p_detail_title}>Height:</p>
+                            <p className={detailStyles.p_detail_value}>{raceId.height} cm.</p>
+                            <p className={detailStyles.p_detail_title}>Life span:</p>
+                            <p className={detailStyles.p_detail_value}>{raceId.life_span}</p>
                         </div>
                     </div>
-        }
-        <Link to={'/home'}>Home</Link>   
+        } 
         </>
     )
 }

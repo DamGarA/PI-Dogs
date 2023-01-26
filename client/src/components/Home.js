@@ -35,28 +35,44 @@ function Home({ filters }) {
 
     const onKeyDownSearchRace = (e) => {
         if (e.keyCode === 13) {
-            fetch(`http://localhost:3001/dogs?name=${e.target.value}`)
+            try {
+                fetch(`http://localhost:3001/dogs?name=${e.target.value}`)
                 .then(res => res.json())
                 .then(dogs => {
                     const newArray = dogs.lista.filter(elem1=> {
                         return actualHomeState.some(elem2 => elem1.name === elem2.name)
                     });
-                    setPage(1)
-                    setValue(1)
-                    dispatch(addAllDogs(newArray))
+                        setPage(1)
+                        setValue(1)
+                        setNotFound(false)
+                        dispatch(addAllDogs(newArray))   
                 })
+                .catch(() => {
+                    setNotFound(true)
+                })     
+            } catch (err) {
+                setNotFound(true)
+            }  
         }
     }
 
     const onKeyDownSearchTemperament = (e) => {
         if (e.keyCode === 13) {
             const newArray = actualHomeState.filter(dog => {
+                
                 if (dog.temperaments) {
                     return dog.temperaments.toUpperCase().includes(e.target.value.toUpperCase())
                 }
                 return false
             })
-            dispatch(addAllDogs(newArray))
+            if (newArray.length === 0) {
+                setNotFound(true)
+            } else {
+                setPage(1)
+                setValue(1)
+                setNotFound(false)
+                dispatch(addAllDogs(newArray))
+            }  
         }
     }
 
@@ -67,10 +83,7 @@ function Home({ filters }) {
                 
                 dispatch(addAllDogs(dogs.lista))
                 dispatch(originalDogs(dogs.lista))
-                // const a = {target:{value:"none-races"}}
-                // const b = {target:{value:"none-weight"}}
-                // filterByOriginAndWeight(a)
-                // filterByOriginAndWeight(b)
+                setNotFound(false)
         })
     }
     
@@ -130,13 +143,19 @@ function Home({ filters }) {
            else {
             dispatch(addAllDogs(show2))
             setNotFound(false)
-            }            
+            }
+            setPage(1)
+            setValue(1)      
         }
         else if (show[0]) {
             dispatch(addAllDogs(show[0]))
+            setPage(1)
+            setValue(1)  
         }
         else if (show[1]) {
             dispatch(addAllDogs(show[1]))
+            setPage(1)
+            setValue(1)  
         }   
     }
 
@@ -147,6 +166,7 @@ function Home({ filters }) {
           return aWeight - bWeight;
         });
         const newArray = [...actualHomeState]
+        setNotFound(false)
         dispatch(addAllDogs(newArray))
     }
 
@@ -157,6 +177,7 @@ function Home({ filters }) {
             return bWeight - aWeight;
         });
         const newArray = [...actualHomeState]
+        setNotFound(false)
         dispatch(addAllDogs(newArray))
     }
 
@@ -174,23 +195,24 @@ function Home({ filters }) {
             return 0;
         });
         const newArray = [...actualHomeState]
+        setNotFound(false)
         dispatch(addAllDogs(newArray))
     }     
 
     const sortByNameZtoA = () => {
         actualHomeState.sort(function(a, b) {
-            const nameA = a.name.toUpperCase(); // ignore upper and lowercase
-            const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+            const nameA = a.name.toUpperCase(); 
+            const nameB = b.name.toUpperCase(); 
             if (nameA > nameB) {
               return -1;
             }
             if (nameA < nameB) {
               return 1;
             }
-            // names must be equal
             return 0;
         });
         const newArray = [...actualHomeState]
+        setNotFound(false)
         dispatch(addAllDogs(newArray))
     }
     
@@ -215,15 +237,14 @@ function Home({ filters }) {
 
             <Filters filterByOriginAndWeight={filterByOriginAndWeight}/>
     
-            {notFound && <p>No se encontraron razas</p>}
+            {notFound && <p className={homeCss.p_notFound}>No breeds were found</p>}
 
             <Cards actualHomeState={actualHomeState} page={page} amountPerPage={amountPerPage}/>
             
             <div className={homeCss.pagination}>
                 <Pagination page={page} setPage={setPage} max={max} value={value} setValue={setValue}/>
             </div>
-        </div>
-        
+        </div>  
     )
 }
 

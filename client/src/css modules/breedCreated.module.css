@@ -1,27 +1,46 @@
-@font-face {
-    font-family: 'aAlloyInk';
-    src: url('./others/aAlloyInk.ttf') format('truetype');
-  }
-
-.pageDiv {
+.allBreed {
+    background-color: skyblue;
+    height: 100vh;
     display: flex;
-    flex-direction: row;
-    max-height: 30px;
-    margin-top: 15px;
+    flex-direction: column;
+  text-align: center;
 }
 
-.pageInput {
-    max-width: 20px;
+.titleBreed {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        text-align: center;
+        font-weight: normal;
+        font-family: aAlloyInk;
+        font-size: 7vw;
+        width: 100%;
+        max-height: 300px;
+        text-align: center;
+        margin-top: 0px;
+        padding-top: 6px;
+        border: 1px solid #000; 
+        box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+        background: linear-gradient(
+            -45deg, 
+            #4bc0c8 25%, 
+            #5e6b6e 25%, 
+            #283235 50%, 
+            #75c5cb 50%, 
+            #17a3ad 75%, 
+            #607178 75%, 
+            #1f272a);	
+        background-position: 0 0;
+        animation: stripes 1s linear infinite;
+        transform: translateY(0px);
+   	
 }
 
-.pagP {
-    font-family: 'aAlloyInk';
-    margin-left: 10px;
-    margin-top: 5px;
-    font-size: x-large;
-}
 
-.btn_prev_next {
+
+
+.seeBreed {
     align-items: center;
     appearance: none;
     background-image: radial-gradient(100% 100% at 100% 0, #17a3ad 0, #7fd0d6 100%);
@@ -31,16 +50,14 @@
     box-sizing: border-box;
     color: #fff;
     cursor: pointer;
-    display: inline-flex;
+    display: inline;
     font-family: "aAlloyInk",monospace;
-    height: 30px;
-    justify-content: center;
+    height: 100px;
     line-height: 1;
     list-style: none;
     overflow: hidden;
     padding-left: 16px;
     padding-right: 16px;
-    position: relative;
     text-align: left;
     text-decoration: none;
     transition: box-shadow .15s,transform .15s;
@@ -49,23 +66,25 @@
      touch-action: manipulation;
     white-space: nowrap;
     will-change: box-shadow,transform;
-    font-size: 18px; 
-    margin-left: 10px;
-    margin-right: 10px;
+    font-size: 30px;
+    margin: auto;
+    margin-top: 10px;
   }
   
-  .btn_prev_next:focus {
+  .seeBreed:focus {
     box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
   }
   
-  .btn_prev_next:hover {
+  .seeBreed:hover {
     box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #17a3ad 0 -3px 0 inset;
     transform: translateY(-2px);
   }
   
-  .btn_prev_next:active {
+  .seeBreed:active {
     box-shadow: #17a3ad 0 3px 7px inset;
     transform: translateY(2px);
   }
-  
 
+  .underline_off {
+    text-decoration: none;
+}

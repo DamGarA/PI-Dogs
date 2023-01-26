@@ -19,7 +19,7 @@ function Card ({name, image, temperaments, weight, id}) {
                     </div>
                     <div className={cardCss.divWeight}>
                         <h3 className={cardCss.h3Weight}>Weight:</h3>
-                        <p className={cardCss.pWeight}>{weight}</p>
+                        <p className={cardCss.pWeight}>{weight} kg.</p>
                     </div>
                 </div>
             </div>

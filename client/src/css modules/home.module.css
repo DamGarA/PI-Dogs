@@ -1,5 +1,6 @@
 .totalHome {
     background-color: skyblue;
+    min-height: 800px;
 }
 
 @font-face {
@@ -74,6 +75,18 @@ h1 {
 .temp {
     width: 100px;
     word-wrap: break-word;
+}
+
+.p_notFound {
+    background-color: red;
+    position: absolute;
+    top: 550px;
+    left: 350px;
+    z-index: 1;
+    font-size: 50px;
+    border-radius: 10px;
+    border: solid white 3px;
+    color: white;
 }
 
 /* ---------------SEARCHS--------------- */

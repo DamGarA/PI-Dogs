@@ -6,8 +6,10 @@ import Home from './components/Home';
 import Form from './components/Form';
 import Detail from './components/Detail';
 import NavBar from './components/NavBar';
+import BreedCreated from './components/BreedCreated';
 import { useDispatch } from 'react-redux'
 import { addTemperaments } from "./redux/actions"
+
 
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
       <Route exact path="/home" render={(props) => <Home {...props} filters={filters} />} />
 
       <Route exact path="/form" component={Form} />
+      <Route exact path="/breedCreated/:id" component={BreedCreated}/>
       <Route exact path="/detail/:id" component={Detail} />
     </BrowserRouter>
   );

@@ -1,0 +1,45 @@
+@font-face {
+    font-family: 'aAlloyInk';
+    src: url('./others/aAlloyInk.ttf') format('truetype');
+}
+
+.allDetail {
+    display: flex;
+    flex-direction: row;
+    background-color: skyblue;
+    background-image: url('./others/fondo\ huellas\ de\ perro.webp');
+    background-size: cover;
+    height: 100vh;
+}
+
+.detailTitle {
+    font-family: 'aAlloyInk';
+    font-size: 50px;
+}
+
+.detailAttributes {
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    width: 100%;
+    text-align: center;
+    justify-content: space-between;
+}
+
+.p_detail_title {
+    font-family: 'aAlloyInk';
+    font-size: xx-large;
+    margin-bottom: 0px;
+    margin-top: 1px;
+}
+
+.p_detail_value {
+    font-family: 'aAlloyInk';
+    font-size: x-large;
+    color: #17a3ad;
+    margin-top: 5px;
+}
+
+.detail_img {
+    max-width: 60%;
+}

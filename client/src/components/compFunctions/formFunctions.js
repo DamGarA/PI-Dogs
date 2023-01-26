@@ -6,7 +6,7 @@ function validate (inputs) {
     if (!inputs.name) {
         errors.name = "Invalid name"
     }
-    else if (!/^[a-zA-Z]+$/.test(inputs.name)) {
+    else if (!/^[a-zA-Z\s]+$/.test(inputs.name)) {
         errors.name = "Invalid name, only letters are allowed"
     }
     else if (parseInt(inputs.minWeight) < 1 && inputs.minWeight !== "") {  
@@ -54,7 +54,7 @@ const errorMessage = (errorValue, errors) => {
     return errorValue.map((val, index) => errors[val] && <p key={index} className={formStyles.warningP}>{errors[val]}</p>)
 }
 
-const showTemperaments = (temper, setTemper, setInputs, inputs) => {
+const showTemperaments = (temper, setTemper, setInputs) => {
     return temper.map((tempName, index) => {
         return <button key={index} className={formStyles.temperamentBtn} onClick={() => deleteTemp(tempName, setTemper, setInputs, temper)}>{tempName}</button>
     })
@@ -80,7 +80,7 @@ const showTemperaments = (temper, setTemper, setInputs, inputs) => {
    
 }
 
-const postData = (e, inputs, temper, setTemper, setErrors, setShowCreated) => {
+const postData = (e, inputs, temper, setErrors, setShowCreated) => {
     e.preventDefault()
     if (inputs.name && inputs.minWeight && inputs.maxWeight && inputs.minHeight && inputs.maxHeight && inputs.minLifeSpan && inputs.maxLifeSpan) {
     const weight = `${inputs.minWeight} - ${inputs.maxWeight}`;
@@ -104,15 +104,15 @@ const postData = (e, inputs, temper, setTemper, setErrors, setShowCreated) => {
         }
         return res.json();
     })
-    .then(data => {       
-        setShowCreated({...data.dog})
+    .then(data => {      
+        setShowCreated(`/breedCreated/${data.dog.id}`)
     })
-    .catch(() => {
-        console.log("entro al catch");
-        setErrors({dataComplete:"Ya existe esa raza weom"})
+    .catch((err) => {    
+        console.log(err)
+        setErrors({dataComplete:err.message})
     })
     }
-    else setErrors({dataComplete:"Faltan datos wey"})
+    else setErrors({dataComplete:"Missing data"})
 }
 
 export {validate, handleChanges, divMinMax, errorMessage, showTemperaments, searchTemperament, postData}

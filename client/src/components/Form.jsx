@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import formStyles from "../css modules/form.module.css"
 import { handleChanges, divMinMax, errorMessage, showTemperaments, searchTemperament,postData } from "./compFunctions/formFunctions.js";
 import { useSelector } from 'react-redux'
+import { Redirect } from "react-router-dom";
 
 function Form () {
     const actualFormState = useSelector(state => state.allTemperaments)
@@ -26,7 +27,7 @@ function Form () {
     <div className={formStyles.allForm}>
         
         <img src='https://wallpapershome.com/images/pages/pic_h/1533.jpg' alt='daece' className={formStyles.img_dog}></img>
-        <form className={formStyles.form} onSubmit={(e) => postData(e, inputs, temper, setTemper, setErrors, setShowCreated)}>
+        <form className={formStyles.form} onSubmit={(e) => postData(e, inputs, temper, setErrors, setShowCreated)}>
         <label className={formStyles.title}>Create Breed</label>
         <div className={formStyles.inputcontainer}>
         <input name="name" type="text" value={inputs.name} onChange={(e) => handleChanges(e, setInputs, setErrors, inputs)}
@@ -49,15 +50,12 @@ function Form () {
         {errorMessage(["name", "minWeight","maxWeight", "minHeight", "maxHeight","minLifeSpan","maxLifeSpan", "dataComplete"], errors)}
         
         </form>
-        {temper.length && showTemperaments(temper, setTemper, setInputs, inputs)}
-        {showCreated && <div>
-                            <p>Name:{showCreated.name}</p>
-                            <p>Weight:{showCreated.weight}</p>
-                            <p>Height:{showCreated.height}</p>
-                            <p>Life Span{showCreated.life_span}</p>
-                            <p>Temperaments:</p>
-                            {/* {showCreated.temperaments.map(temp => <p key={temp.id}>{temp.name}</p>)} */}
-                        </div>}
+        <div className={formStyles.div_temp}>
+        <p className={formStyles.pTemp}>Temperaments:</p>
+        {temper.length > 0 && showTemperaments(temper, setTemper, setInputs)}
+        </div>
+
+        {showCreated && <Redirect to={showCreated} />}
     </div>
     )
 }
