@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import Pagination from "./pagination"
 import homeCss from "../css modules/home.module.css"
-import { addAllDogs, originalDogs } from "../redux/actions"
+import { originalDogs } from "../redux/actions"
+import { onKeyDownSearchRace } from "./compFunctions/homeFunctions"
 import Cards from "./Cards"
 import Filters from "./Filters"
 
@@ -28,33 +29,9 @@ function Home({ filters }) {
                 .then(dogs => {
                     dispatch(addAllDogs(dogs.lista))
                     dispatch(originalDogs(dogs.lista))
-                    
                 })
             }
     }, [])
-
-    const onKeyDownSearchRace = (e) => {
-        if (e.keyCode === 13) {
-            try {
-                fetch(`http://localhost:3001/dogs?name=${e.target.value}`)
-                .then(res => res.json())
-                .then(dogs => {
-                    const newArray = dogs.lista.filter(elem1=> {
-                        return actualHomeState.some(elem2 => elem1.name === elem2.name)
-                    });
-                        setPage(1)
-                        setValue(1)
-                        setNotFound(false)
-                        dispatch(addAllDogs(newArray))   
-                })
-                .catch(() => {
-                    setNotFound(true)
-                })     
-            } catch (err) {
-                setNotFound(true)
-            }  
-        }
-    }
 
     const onKeyDownSearchTemperament = (e) => {
         if (e.keyCode === 13) {
@@ -86,44 +63,29 @@ function Home({ filters }) {
                 setNotFound(false)
         })
     }
-    
-    const myRaces =  originalDogsState.filter(race => race.id < 300)
-    const apiRaces =  originalDogsState.filter(race => race.id > 300)
-    const lightWeight =  originalDogsState.filter(dog => {
-        const numberWeight = parseInt(dog.weight.substr(-2).trim())
-        return numberWeight < 12
-    })
-    const mediumWeight =  originalDogsState.filter(dog => {
-        const numberWeight = parseInt(dog.weight.substr(-2).trim())
-        return numberWeight >= 12 && numberWeight <= 30
-    })
-    const heavyWeight =  originalDogsState.filter(dog => {
-        const numberWeight = parseInt(dog.weight.substr(-2).trim())
-        return numberWeight > 30
-    })
 
     const filterByOriginAndWeight = (e) => {
         switch (e.target.value) {
             case "my-races":
-                filters[0] = [...myRaces];
+                filters[0] = originalDogsState.filter(race => race.id < 300)
                 break;
             case "api-races":
-                filters[0] = [...apiRaces]
+                filters[0] = originalDogsState.filter(race => race.id > 300)
                 break;
             case "none-races":
-                filters[0] = [...myRaces, ...apiRaces]
+                filters[0] = [...originalDogsState]
                 break;
             case "light-weight":
-                filters[1] = [...lightWeight]
+                filters[1] = originalDogsState.filter(dog => parseInt(dog.weight.substr(-2).trim()) < 12)
                 break;
             case "medium-weight":
-                filters[1] = [...mediumWeight]
+                filters[1] = originalDogsState.filter(dog => parseInt(dog.weight.substr(-2).trim()) >= 12 && parseInt(dog.weight.substr(-2).trim()) <= 30)
                 break;
             case "heavy-weight":
-                filters[1] = [...heavyWeight]
+                filters[1] = originalDogsState.filter(dog => parseInt(dog.weight.substr(-2).trim()) > 30)
                 break;
             case "none-weight":
-                filters[1] = [...lightWeight, ...mediumWeight, ...heavyWeight]
+                filters[1] = [...originalDogsState]
                 break;
             default:
                 return
@@ -158,7 +120,7 @@ function Home({ filters }) {
             setValue(1)  
         }   
     }
-
+      
     const sortByWeightMinToMax = () => {
        actualHomeState.sort(function(a, b) {
             const aWeight = parseInt(a.weight.substr(-2).trim())
@@ -191,7 +153,6 @@ function Home({ filters }) {
             if (nameA > nameB) {
               return 1;
             }
-            // names must be equal
             return 0;
         });
         const newArray = [...actualHomeState]
@@ -220,13 +181,13 @@ function Home({ filters }) {
         <div className={homeCss.totalHome}>
             <h1>Dog Breeds!</h1>
             <span className={homeCss.span_father}>
-            <input className={homeCss.basic_slide} onKeyDown={(e) => onKeyDownSearchRace(e)} placeholder="Search breed..."/>
-            <label for="name ">Breed</label>
+            <input className={homeCss.basic_slide} onKeyDown={(e) => onKeyDownSearchRace(e, actualHomeState, setPage, setValue, setNotFound, dispatch, addAllDogs)} placeholder="Search breed..."/>
+            <label htmlFor="name ">Breed</label>
             </span>
             
             <span className={homeCss.span_father}>
             <input className={homeCss.basic_slide} onKeyDown={(e) => onKeyDownSearchTemperament(e)} placeholder="Search temperament..."/>
-            <label for="name ">Temps.</label>
+            <label htmlFor="name ">Temps.</label>
             </span>
 
             <button className={homeCss.btn_sort} onClick={() => resetDogs()}>All dogs</button>

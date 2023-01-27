@@ -6,7 +6,7 @@ function NavBar() {
     return (
         <div className={navStyles.divBar}>
             <Link className={navStyles.underline_off} to="/home"><button className={navStyles.button_formAndHome}>Home</button></Link>
-            <Link className={navStyles.underline_off} to="/form"><button className={navStyles.button_formAndHome}>Form</button></Link>
+            <Link className={navStyles.underline_off} to="/form"><button className={navStyles.button_formAndHome}>Create</button></Link>
         </div>
     )
 }

@@ -27,7 +27,9 @@ function validate (inputs) {
     else if (parseInt(inputs.maxLifeSpan) <= parseInt(inputs.minLifeSpan) && inputs.maxLifeSpan) {
         errors.maxLifeSpan = "Invalid maximum life span"
     }
-
+    else if (!/(\.jpg|\.jpeg|\.png|\.gif)$/.test(inputs.image) && inputs.image !== "") {
+        errors.image = "Supported files: .jpg .jpeg .png .gif"
+    }
     return errors
 }
 
@@ -80,23 +82,29 @@ const showTemperaments = (temper, setTemper, setInputs) => {
    
 }
 
-const postData = (e, inputs, temper, setErrors, setShowCreated) => {
+const postData = (e, inputs, temper, errors, setErrors, setShowCreated) => {
     e.preventDefault()
-    if (inputs.name && inputs.minWeight && inputs.maxWeight && inputs.minHeight && inputs.maxHeight && inputs.minLifeSpan && inputs.maxLifeSpan) {
+    if (!Object.values(errors).some(Boolean) && inputs.minWeight && inputs.maxWeight && inputs.minHeight && inputs.maxHeight && inputs.minLifeSpan && inputs.maxLifeSpan && inputs.name)
+    {
     const weight = `${inputs.minWeight} - ${inputs.maxWeight}`;
     const height = `${inputs.minHeight} - ${inputs.maxHeight}`;
     const life_span = `${inputs.minLifeSpan} - ${inputs.maxLifeSpan}`;
 
+    const body = {
+        name: inputs.name,
+        weight,
+        height,
+        life_span,
+        temperaments: temper,
+    }
+    if (inputs.image !== "") {
+        body.image = inputs.image;
+    }
+
     fetch('http://localhost:3001/dogs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            name: inputs.name,
-            weight,
-            height,
-            life_span,
-            temperaments: temper
-        })
+        body: JSON.stringify(body)
     })
     .then(res => {
         if (!res.ok) {
@@ -112,7 +120,13 @@ const postData = (e, inputs, temper, setErrors, setShowCreated) => {
         setErrors({dataComplete:err.message})
     })
     }
-    else setErrors({dataComplete:"Missing data"})
+    else setErrors({dataComplete:"Invalid data"})
 }
 
-export {validate, handleChanges, divMinMax, errorMessage, showTemperaments, searchTemperament, postData}
+const findTemperament = (e, temper, setTemper) => {
+    if (e.target.value !== "none" && !temper.includes(e.target.value)) setTemper([...temper, e.target.value]);
+    const select = document.getElementById("mySelect");
+    select.value = "none"
+}
+
+export {validate, handleChanges, divMinMax, errorMessage, showTemperaments, searchTemperament, postData, findTemperament}

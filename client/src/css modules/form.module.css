@@ -21,14 +21,14 @@
     font-size: 40px;
     font-weight: 600;
     font-family: 'aAlloyInk';
-    margin-top: 50px;
+
 }
 
 .input-container {
     height: 120px;
     position: relative;
     width: 100%;
-    margin-top: 40px;
+  
 }
 
 .input_half {
@@ -46,7 +46,7 @@
     outline: 0;
     padding: 10px 10px;
     width: 100%;
-    margin: 15px 0px;
+    margin: 10px 0px;
 }
 
 

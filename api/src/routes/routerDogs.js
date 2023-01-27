@@ -36,10 +36,10 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const {name, height, weight, life_span, temperaments} = req.body;
+    const {name, height, weight, life_span, temperaments, image} = req.body;
     try {
         if (!name || !height || !weight) return res.status(400).send('Faltan datos para crear');
-        const newDog = await postRace(name, height, weight, life_span, temperaments)
+        const newDog = await postRace(name, height, weight, life_span, temperaments, image)
         return res.json({message: "Se creo correctamente", dog: newDog})
     } catch (error) {
         return res.status(400).json({error: error.message})

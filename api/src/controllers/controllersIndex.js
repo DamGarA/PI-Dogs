@@ -17,7 +17,6 @@ const getDogs =  async () => {
                     temperaments: dog.temperament
                 }
             })
-
             return Dog.findAll({
                 include: [{
                     model: Temperament,
@@ -40,8 +39,7 @@ const getDogs =  async () => {
                 }
                 const allDogs = dbDogs.concat(api_dogs)
                 return allDogs
-            })
-            
+            })   
         })
 }
 
@@ -85,13 +83,10 @@ const getRace = async (search) => {
                     dog.dataValues.temperaments = temp
                 })
             }
-
-
             const allRaces = dbDogs.concat(racesApiModel)
             if (allRaces.length > 0) return allRaces
             else throw Error('Not found races')
-        })
-        
+        })  
     })
 }
 
@@ -129,58 +124,48 @@ const getRacesById = async (id) => {
                     
                     return race
                 })
-                
-            }
-            
-            
-            
+            }       
     })
 }
+
+// const getTemperaments = async () => {
+//     const response = await fetch(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
+//     const data = await response.json();
+//     let temperaments = []
+//     data.forEach(race => {
+//         if (typeof race.temperament == "string") {
+//             const arr = race.temperament.split(", ")
+//             arr.forEach(temp => {
+//                 if (!temperaments.includes(temp)) {
+//                     temperaments.push(temp)
+//                 }
+//             })
+//         }
+//     });
+//     //verificar que no existan en la bdd
+//     const existingTemperaments = await Temperament.findAll({ where: { name: temperaments } });
+//     const existingTemperamentsNames = existingTemperaments.map(temp => temp.name);
+//     const newTemperaments = temperaments.filter(temp => !existingTemperamentsNames.includes(temp));
+
+//     await Promise.all(newTemperaments.map(name => Temperament.create({ name })));
+//     return await Temperament.findAll();
+// }
 
 const getTemperaments = async () => {
     const response = await fetch(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
     const data = await response.json();
-    let temperaments = []
-    data.forEach(race => {
-        if (typeof race.temperament == "string") {
-            const arr = race.temperament.split(", ")
-            arr.forEach(temp => {
-                if (!temperaments.includes(temp)) {
-                    temperaments.push(temp)
-                }
-            })
-        }
-    });
-    //verificar que no existan en la bdd
-    const existingTemperaments = await Temperament.findAll({ where: { name: temperaments } });
-    const existingTemperamentsNames = existingTemperaments.map(temp => temp.name);
-    const newTemperaments = temperaments.filter(temp => !existingTemperamentsNames.includes(temp));
-
-    await Promise.all(newTemperaments.map(name => Temperament.create({ name })));
+    const temperaments = [
+        ...new Set(
+          data.flatMap(race => race.temperament ? race.temperament.split(", ") : [])
+        )
+      ];
+    await Temperament.bulkCreate(temperaments.map(name => ({ name })))
     return await Temperament.findAll();
 }
 
-// const postRace = async (name, height, weight, life_span, temperaments) => {
-//     const race = await Dog.create({name, height, weight, life_span})
-//     for (const temp of temperaments) {
-//         const temper = temp[0].toUpperCase() + temp.slice(1).toLowerCase()
-//         const temperament = await Temperament.findOne({ where: { name: temper } });
-//         await race.addTemperament(temperament);
-//     }
-//     const showRace = await Dog.findByPk(race.id, {
-//         include: [{
-//             model: Temperament,
-//             attributes: ["id", "name"],
-//             through: {
-//                 attributes: []
-//             }
-//         }]
-//     })
-//     return showRace
-// }
 
-const postRace = async (name, height, weight, life_span, temperaments) => {
-    const race = await Dog.create({name, height, weight, life_span})
+const postRace = async (name, height, weight, life_span, temperaments, image) => {
+    const race = await Dog.create({name, height, weight, life_span, image})
     const temperamentInstances = []
     for (const temp of temperaments) {
         const temper = temp[0].toUpperCase() + temp.slice(1).toLowerCase()
