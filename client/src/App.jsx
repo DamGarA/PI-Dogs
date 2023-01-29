@@ -14,7 +14,7 @@ import { addTemperaments } from "./redux/actions"
 
 function App() {
   const dispatch = useDispatch()
-  let filters = ["none", "none"]
+  let filters = ["none", "none", "none-races", "none-weight"]
 
   useEffect(() => {
     fetch('http://localhost:3001/temperaments')

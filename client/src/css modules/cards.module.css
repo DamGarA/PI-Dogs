@@ -1,0 +1,6 @@
+.racesBlock {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 95%;
+    margin-top: 15px;
+}

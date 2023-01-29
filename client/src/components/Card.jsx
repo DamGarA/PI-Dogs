@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import cardCss from "../css modules/card.module.css"
 
 function Card ({name, image, temperaments, weight, id}) {
+    if (isNaN(weight.substr(0,1))) weight = "Unknown"
     return (
-        
             <div className={cardCss.card}>
                 <div className={cardCss.raceContent}>
                     <div className={cardCss.divName}>
@@ -23,7 +23,6 @@ function Card ({name, image, temperaments, weight, id}) {
                     </div>
                 </div>
             </div>
-        
     )
 }
 

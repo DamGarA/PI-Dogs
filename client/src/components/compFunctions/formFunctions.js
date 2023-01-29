@@ -15,6 +15,12 @@ function validate (inputs) {
     else if (parseInt(inputs.maxWeight) <= parseInt(inputs.minWeight) && inputs.maxWeight !== "") {
         errors.minWeight = "Invalid maximum weight"
     }
+    else if (parseInt(inputs.minWeight) > 99) {  
+        errors.minWeight = "Overweight"
+    }
+    else if (parseInt(inputs.maxWeight) > 99) {  
+        errors.maxWeight = "Overweight"
+    }
     else if (parseInt(inputs.minHeight) < 1 && inputs.minHeight !== "") {
         errors.minHeight = "Invalid minimum height"
     }
@@ -108,16 +114,18 @@ const postData = (e, inputs, temper, errors, setErrors, setShowCreated) => {
     })
     .then(res => {
         if (!res.ok) {
-            throw new Error(res.statusText);
-        }
-        return res.json();
+            return res.json().then(error => {
+                
+              throw new Error(error.error);
+            });
+          }
+          return res.json();
     })
     .then(data => {      
         setShowCreated(`/breedCreated/${data.dog.id}`)
     })
     .catch((err) => {    
-        console.log(err)
-        setErrors({dataComplete:err.message})
+        setErrors({dataComplete: "BAD REQUEST: " + err.message})
     })
     }
     else setErrors({dataComplete:"Invalid data"})

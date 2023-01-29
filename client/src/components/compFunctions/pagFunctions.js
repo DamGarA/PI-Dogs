@@ -24,10 +24,18 @@ const onKeyDown = (e, setPage, max) => {
     }
 }
 
+const btnSelect = (e, setPage, setValue, max) => {
+    const val = parseInt(e.target.value)
+    if (val <= max) {
+        setPage(val)
+        setValue(val)
+    }
+}
 
 module.exports = {
     next,
     prev,
     onChange,
-    onKeyDown
+    onKeyDown,
+    btnSelect
 }

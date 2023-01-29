@@ -23,4 +23,24 @@ const onKeyDownSearchRace = (e, actualHomeState, setPage, setValue, setNotFound,
     }
 }
 
-export {onKeyDownSearchRace}
+const onKeyDownSearchTemperament = (e, actualHomeState, setNotFound, setPage, setValue, dispatch) => {
+    if (e.keyCode === 13) {
+        const newArray = actualHomeState.filter(dog => {
+            
+            if (dog.temperaments) {
+                return dog.temperaments.toUpperCase().includes(e.target.value.toUpperCase())
+            }
+            return false
+        })
+        if (newArray.length === 0) {
+            setNotFound(true)
+        } else {
+            setPage(1)
+            setValue(1)
+            setNotFound(false)
+            dispatch(addAllDogs(newArray))
+        }  
+    }
+}
+
+export {onKeyDownSearchRace, onKeyDownSearchTemperament}
