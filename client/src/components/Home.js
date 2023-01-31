@@ -11,18 +11,21 @@ import Searchs from "./Searchs"
 
 function Home({ filters }) {
     const dispatch = useDispatch()
-    const [page, setPage] = useState(1)
-    const [value, setValue] = useState(1)
-    const [amountPerPage] = useState(8)
-    const [notFound, setNotFound] = useState(false)
-    const actualHomeState = useSelector(state => state.allDogs)
-    const originalDogsState = useSelector(state => state.originalDogs)
+    const [page, setPage] = useState(1) //pagina actual de las cards que se ven
+    const [value, setValue] = useState(1) //valor de la pagina en el input de abajo
+    const [amountPerPage] = useState(8) // cantidad de cards por pagina
+    const [notFound, setNotFound] = useState(false) // alerta de que no se encontraron resultados
+    const actualHomeState = useSelector(state => state.allDogs) //lista de razas actuales(filtradas)
+    const originalDogsState = useSelector(state => state.originalDogs) // lista de razas sin modificar
 
-    let max;
+    let max; //maximo de paginas q se renderizan
+
+    //si el estado de razas no esta vacio, se asigna el maximo de paginas
     if (actualHomeState && actualHomeState.length) {
         max = Math.ceil(actualHomeState.length / amountPerPage);
     }
 
+    //cuando se renderiza el home se hace dispatch de la lista completa de razas a ambos estados de redux
     useEffect(() => {
         if (actualHomeState.length === 0) {
             fetch('http://localhost:3001/dogs')
@@ -32,7 +35,7 @@ function Home({ filters }) {
                     dispatch(originalDogs(dogs.lista))
                 })
             }
-    },)
+    }, [notFound])
     
     return (
         <div className={homeCss.totalHome}>
@@ -40,13 +43,15 @@ function Home({ filters }) {
 
             <Searchs  actualHomeState={actualHomeState} setPage={setPage} setValue={setValue} setNotFound={setNotFound} dispatch={dispatch}/>
 
-            <Buttons actualHomeState={actualHomeState} originalDogsState={originalDogsState} originalDogs={originalDogs} dispatch={dispatch} setNotFound={setNotFound} setPage={setPage} setValue={setValue}/>
+            <Buttons actualHomeState={actualHomeState} originalDogsState={originalDogsState} originalDogs={originalDogs} dispatch={dispatch} setNotFound={setNotFound} setPage={setPage} setValue={setValue} filters={filters}/>
 
-            <Filters setNotFound={setNotFound} dispatch={dispatch} setPage={setPage} setValue={setValue} originalDogsState={originalDogsState} filters={filters}/>
-    
             {notFound && <p className={homeCss.p_notFound}>No breeds were found</p>}
 
+            <div className={homeCss.card_filters}>
             <Cards actualHomeState={actualHomeState} page={page} amountPerPage={amountPerPage}/>
+
+            <Filters setNotFound={setNotFound} dispatch={dispatch} setPage={setPage} setValue={setValue} originalDogsState={originalDogsState} filters={filters}/>
+            </div>
             
             <div className={homeCss.pagination}>
                 <Pagination page={page} setPage={setPage} max={max} value={value} setValue={setValue}/>

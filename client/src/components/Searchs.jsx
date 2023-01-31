@@ -5,9 +5,10 @@ import searchsCss from "../css modules/searchs.module.css"
 function Searchs({ actualHomeState, setPage, setValue, setNotFound, dispatch }) {
     return (
         <>
-            <span className={searchsCss.span_father}>
-            <input className={searchsCss.basic_slide} onKeyDown={(e) => onKeyDownSearchRace(e, actualHomeState, setPage, setValue, setNotFound, dispatch)} placeholder="Search breed..."/>
-            <label htmlFor="name ">Breed</label>
+           
+            <span className={searchsCss.span_father}> {/* Contenedor */}
+            <input className={searchsCss.basic_slide} onKeyDown={(e) => onKeyDownSearchRace(e, actualHomeState, setPage, setValue, setNotFound, dispatch)} placeholder="Search breed..."/> {/* Input */}
+            <label htmlFor="name ">Breed</label> {/* Etiqueta verde */}
             </span>
             
             <span className={searchsCss.span_father}>

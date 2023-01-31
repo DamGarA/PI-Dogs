@@ -1,6 +1,7 @@
+/* fondo */
 .totalHome {
     background-color: skyblue;
-    min-height: 800px;
+    min-height: 900px;
 }
 
 @font-face {
@@ -8,17 +9,12 @@
     src: url('./others/aAlloyInk.ttf') format('truetype');
 }
 
+/* titulo */
 h1 {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	align-content: center;
-	text-align: center;
 	font-weight: normal;
-    font-family: aAlloyInk;
+    font-family: aAlloyInk, sans-serif;
     font-size: 7vw;
 	width: 50%;
-    max-height: 300px;
 	text-align: center;
 	margin: auto;
     padding-top: 6px;
@@ -33,31 +29,36 @@ h1 {
 		#75c5cb 50%, 
 		#17a3ad 75%, 
 		#607178 75%, 
-		#1f272a);	
-	background-position: 0 0;
-	animation: stripes 1s linear infinite;
+		#1f272a);
     transform: translateY(-30px);
 }
 
+/* fondo */
 .pagination {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+/* Cartel de alerta cuando no se encuentran razas */
 .p_notFound {
     background-color: red;
     position: absolute;
     top: 550px;
     left: 350px;
-    z-index: 1;
+    z-index: 1; /* Profundidad para que aparezca arriba de las cards */
     font-size: 50px;
     border-radius: 10px;
     border: solid white 3px;
     color: white;
 }
 
-
+/* Pone cards y filters uno al lado del otro */
+.card_filters {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
 
 
 

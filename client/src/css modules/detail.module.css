@@ -43,3 +43,62 @@
 .detail_img {
     max-width: 60%;
 }
+
+.deleteBtn {
+    background-image: radial-gradient(100% 100% at 100% 0, #17a3ad 0, #7fd0d6 100%);
+    border: 0;
+    border-radius: 6px;
+    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+    color: #fff;
+    cursor: pointer;
+    font-family: "aAlloyInk",monospace;
+    height: 30px;
+    padding-left: 16px;
+    padding-right: 16px;
+    transition: box-shadow .15s,transform .15s;
+    font-size: 10px;
+    align-items: center;
+    width: 181px;
+    position: absolute;
+  }
+    
+  .deleteBtn:hover {
+    box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #17a3ad 0 -3px 0 inset;
+    transform: translateY(-2px);
+  }
+    
+  .deleteBtn:active {
+    box-shadow: #17a3ad 0 3px 7px inset;
+    transform: translateY(2px);
+  }
+  
+
+  .updateBtn {
+    background-image: radial-gradient(100% 100% at 100% 0, #17a3ad 0, #7fd0d6 100%);
+    border: 0;
+    border-radius: 6px;
+    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+    color: #fff;
+    cursor: pointer;
+    font-family: "aAlloyInk",monospace;
+    height: 30px;
+    padding-left: 16px;
+    padding-right: 16px;
+    transition: box-shadow .15s,transform .15s;
+    font-size: 10px;
+    align-items: center;
+    width: 181px;
+    position: absolute;
+    top: 77px;
+    left: 0px;
+  }
+    
+  .updateBtn:hover {
+    box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #17a3ad 0 -3px 0 inset;
+    transform: translateY(-2px);
+  }
+    
+  .updateBtn:active {
+    box-shadow: #17a3ad 0 3px 7px inset;
+    transform: translateY(2px);
+  }

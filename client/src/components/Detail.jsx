@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import detailStyles from "../css modules/detail.module.css"
+import { deleteBreed } from "./compFunctions/detailFunctions";
 
 function Detail () {
     const [raceId, setRaceId] = useState(null)
@@ -30,7 +31,10 @@ function Detail () {
                             <p className={detailStyles.p_detail_title}>Life span:</p>
                             <p className={detailStyles.p_detail_value}>{raceId.life_span}</p>
                         </div>
+                        {id < 300 && <button className={detailStyles.deleteBtn} onClick={() => deleteBreed(id)}>Delete Breed</button>}
+                        {id < 300 && <Link to={`/update/${id}`}><button className={detailStyles.updateBtn}>Update Breed</button></Link>}
                     </div>
+                    
         } 
         </>
     )

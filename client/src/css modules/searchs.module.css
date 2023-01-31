@@ -2,50 +2,43 @@
     position: relative;
 }
 
-.basic_slide {
-    display: inline-block;
+.basic_slide {  
     width: 215px;
-    padding: 10px 0 10px 15px;
-    font-family: "Open Sans", sans;
+    padding: 10px 0 10px 15px;  /* Establece un padding del area blanca */
+    font-family: "Open Sans", sans; /* Fuente */
     font-weight: 400;
     color: #377d6a;
     background: #efefef;
-    border: 0;
+    border: 0; /* Elimina el borde */
     border-radius: 3px;
-    outline: 0;
-    text-indent: 70px;
-    transition: all 0.3s ease-in-out;
+    outline: 0; /* Elimina el borde cuando se selecciona */
     margin-left: 50px;
 }
+  
+/* Hace que cuando no esta seleccionado, no se vea el placeholder */
 .basic_slide::-webkit-input-placeholder {
     color: #efefef;
-    text-indent: 0;
-    font-weight: 300;
 }
-.basic_slide + label {
-    display: inline-block;
-    position: absolute;
-    top: -2px;
+
+/* La etiqueta verde de arriba */
+label {
+    position: absolute; /* Posicion en relacion al span_father */
+    top: -2px;  
     left: 55px;
     height: 10px;
     padding: 10px 15px;
-    text-shadow: 0 1px 0 rgba(19, 74, 70, .4);
     background: #2ac3ce;
-    transition: all 0.3s ease-in-out;
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
+    transition: all 0.3s ease-in-out; /* Hace que suba despacio */
+    border-radius: 3px;
     font-family: aAlloyInk;
 }
-.basic_slide:focus, .basic_slide:active {
-    color: #377d6a;
-    text-indent: 0;
-    background: #fff;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-.basic_slide:focus::-webkit-input-placeholder, .basic_slide:active::-webkit-input-placeholder {
+
+/* Muestra el placeholder cuando se selecciona */
+.basic_slide:focus::-webkit-input-placeholder {
     color: #aaa;
 }
-.basic_slide:focus + label, .basic_slide:active + label {
+
+/* Levanta la etiqueta cuando se selecciona */
+.basic_slide:focus + label {
     transform: translateY(-100%);
 }

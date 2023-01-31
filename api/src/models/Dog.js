@@ -16,21 +16,33 @@ module.exports = (sequelize) => {
     },
     height: {
       type: DataTypes.STRING,
-      allowNull: false
-      //"Entre 23 y 29 cm"
+      allowNull: false,
+      validate: {
+        isHeightValid(value) {
+          if (!/^(\d{1,2})\s-\s(\d{1,2})$/.test(value)) {
+            throw new Error('Incorrect format');
+          }
+        }
+      }
     },
     weight: {
       type: DataTypes.STRING,
       allowNull: false
-      //"Entre 2 y 3 kg"
     },
     life_span: {
       type: DataTypes.STRING,
-      defaultValue: "Andasa"
+      defaultValue: "Unknown"
     },
     image: {
       type: DataTypes.STRING,
-      defaultValue: "https://comodibujar.club/wp-content/uploads/2019/03/dibujar-perro-kawaii-1.jpg"
+      defaultValue: "https://comodibujar.club/wp-content/uploads/2019/03/dibujar-perro-kawaii-1.jpg",
+      validate: {
+        isImageUrl(value) {
+          if (!/\.(jpg|jpeg|png|gif)$/i.test(value)) {
+            throw new Error("Only .jpg, .jpeg, .png y .gif are allowed");
+          }
+        }
+      }
     }
   },{
     timestamps: false

@@ -4,155 +4,139 @@
 }
 
 .form {
-    background-color: #17a3ad;
-    border-radius: 20px;
-    box-sizing: border-box;
-    height: 500px;
-    padding: 20px;
-    width: 320px;
-    margin-top: 40px;
-    border-color: white;
-    border: 33px;
+  background-color: #17a3ad;
+  border-radius: 20px;
+  box-sizing: border-box;
+  height: 500px;
+  padding: 20px;
+  width: 320px;
+  min-width: 319px;
+  margin-top: 40px;
+  border-color: white;
+  border: 33px;
 }
   
-.title {
-    color: #eee;
-    font-family: sans-serif;
-    font-size: 40px;
-    font-weight: 600;
-    font-family: 'aAlloyInk';
-
+.title_form {
+  color: #eee;
+  font-size: 40px;
+  font-family: 'aAlloyInk';
+  margin: 0px;
 }
 
 .input-container {
-    height: 120px;
-    position: relative;
-    width: 100%;
-  
+  height: 120px;
+  position: relative;
+  width: 100%;
 }
 
 .input_half {
-    width: 50%;
-    float: left;
+  width: 50%;
+  float: left;
 }
   
 .input {
-    background-color: white;
-    border-radius: 12px;
-    border: 0;
-    box-sizing: border-box;
-    color: black;
-    font-size: 18px;
-    outline: 0;
-    padding: 10px 10px;
-    width: 100%;
-    margin: 10px 0px;
+  background-color: white;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: black;
+  font-size: 18px;
+  outline: 0;
+  padding: 10px 10px;
+  width: 100%;
+  margin: 10px 0px;
 }
 
 
 .input::placeholder {
-    border-color: red;
+  border-color: red;
 }
 
 .submit {
-    background-color: rgb(67, 67, 67);
-    border-radius: 12px;
-    border: 0;
-    box-sizing: border-box;
-    color: #17a3ad;
-    cursor: pointer;
-    font-size: 25px;
-    font-weight: 700;
-    height: 50px;
-    outline: 0;
-    text-align: center;
-    width: 100%;
+  background-color: rgb(67, 67, 67);
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #17a3ad;
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: 700;
+  height: 50px;
+  outline: 0;
+  text-align: center;
+  width: 100%;
 }
   
 .submit:active {
-    background-color: #06b;
+  background-color: #06b;
 }
   
 .textarea {
-    border-radius: 10px;
-    width: 100%;
-    height: 70px;
-    margin-top: 0px;
-    margin-bottom: 10px;
+  border-radius: 10px;
+  width: 100%;
+  height: 70px;
+  margin-top: 0px;
+  margin-bottom: 10px;
 }
 
 .warningP {
-    margin: 0px;
-    color: white;
-    background-color: red;
-    text-align: center;
-    margin-top: 20px;
-    border-radius: 5px;
+  margin: 0px;
+  color: white;
+  background-color: red;
+  text-align: center;
+  margin-top: 20px;
+  border-radius: 5px;
 }
 
 
 /* -------------Temperaments----------- */
 
 .div_temp {
-    display: flex;
-    flex-direction: column;
-    margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
 }
 
 .temperamentBtn {
-    align-items: center;
-    appearance: none;
-    background-image: radial-gradient(100% 100% at 100% 0, #17a3ad 0, #7fd0d6 100%);
-    border: 0;
-    border-radius: 6px;
-    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer;
-    display: inline-flex;
-    font-family: "aAlloyInk",monospace;
-    height: 30px;
-    justify-content: center;
-    line-height: 1;
-    list-style: none;
-    overflow: hidden;
-    padding-left: 16px;
-    padding-right: 16px;
-    position: relative;
-    text-align: left;
-    text-decoration: none;
-    transition: box-shadow .15s,transform .15s;
-    user-select: none; 
-     -webkit-user-select: none; 
-     touch-action: manipulation;
-    white-space: nowrap;
-    will-change: box-shadow,transform;
-    font-size: 18px;
-    margin-left: 10px; 
-  }
+  background-image: radial-gradient(100% 100% at 100% 0, #17a3ad 0, #7fd0d6 100%);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  color: #fff;
+  cursor: pointer;
+  font-family: "aAlloyInk",monospace;
+  height: 30px;
+  padding-left: 16px;
+  padding-right: 16px;
+  transition: box-shadow .15s,transform .15s;
+  font-size: 18px;
+  margin-left: 2px;
+  max-width: 185px; 
+  align-items: center;
+}
   
-  .temperamentBtn:focus {
-    box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
-  }
+.temperamentBtn:hover {
+  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #17a3ad 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
   
-  .temperamentBtn:hover {
-    box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #17a3ad 0 -3px 0 inset;
-    transform: translateY(-2px);
-  }
-  
-  .temperamentBtn:active {
-    box-shadow: #17a3ad 0 3px 7px inset;
-    transform: translateY(2px);
-  }
+.temperamentBtn:active {
+  box-shadow: #17a3ad 0 3px 7px inset;
+  transform: translateY(2px);
+}
 
-  .pTemp {
-    font-family: aAlloyInk;
-    margin-left: 7px;;
-  }
+.pTemp {
+  font-family: aAlloyInk;
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+.selectForm {
+  margin-top: 5px;
+}
 
 
-
-/* ---------------------- */
+/* --------------------- */
 
 .img_dog {
   height: 450px;

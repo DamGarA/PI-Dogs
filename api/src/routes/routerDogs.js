@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getDogs, getRace, getRacesById, postRace } = require('../controllers/controllersIndex.js');
+const { getDogs, getRace, getRacesById, postRace, deleteRace, updateRace } = require('../controllers/controllersIndex.js');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -45,6 +45,27 @@ router.post('/', async (req, res) => {
         return res.status(400).json({error: error.message})
     }
 })
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await deleteRace(id);
+        return res.json({ message: 'Delete Breed!' });
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+});
+
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, height, weight, life_span, temperaments, image } = req.body;
+    try {
+        const updatedDog = await updateRace(id, name, height, weight, life_span, temperaments, image);
+        return res.json({ message: 'Breed Updated Correctly!', dog: updatedDog });
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+});
 
 
 module.exports = router;

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import formStyles from "../css modules/form.module.css"
-import { handleChanges, divMinMax, errorMessage, showTemperaments, searchTemperament, postData, findTemperament} from "./compFunctions/formFunctions.js";
+import { handleChanges, divMinMax, errorMessage, showTemperaments, searchTemperament, updateData, findTemperament} from "./compFunctions/updateFunctions.js";
 import { useSelector } from 'react-redux'
-import { Redirect } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-function Form () {
+function Update () {
     const actualFormState = useSelector(state => state.allTemperaments)
+    const { id } = useParams()
     
-    //modelo para inputs y errors
     const obj = {
         name: "",
         minWeight: "",
@@ -20,74 +20,73 @@ function Form () {
         image:""
     }
 
-    const [inputs, setInputs] = useState({...obj}) //valor de los inputs
-    const [errors, setErrors] = useState({...obj, dataComplete: ""}) //errores
-    const [temper, setTemper] = useState([]) //temperamentos seleccionados para la raza
-    const [showCreated, setShowCreated] = useState(false) //estado para redirigir hacia el componente BreedCreated una vez que se hace el envio de informacion
+    useEffect(() => {
+        fetch(`http://localhost:3001/dogs/${id}`)
+        .then(res => res.json())
+        .then(race => {
+            setInputs({
+                name: race.race.name,
+                minWeight: race.race.weight.slice(0,2).trim(),
+                maxWeight: race.race.weight.slice(-2).trim(),
+                minHeight: race.race.height.slice(0,2).trim(),
+                maxHeight: race.race.height.slice(-2).trim(),
+                minLifeSpan: race.race.life_span.slice(0,2).trim(),
+                maxLifeSpan: race.race.life_span.slice(-2).trim(),
+                temperament: "",
+                image: race.race.image
+            })
+            setTemper([...race.race.temperaments.split(", ")])
+        })
+    }, [id])
+
+    const [inputs, setInputs] = useState({...obj})
+    const [errors, setErrors] = useState({...obj, dataComplete: ""})
+    const [temper, setTemper] = useState([])
 
     return (
     <div className={formStyles.allForm}>
         
-        {/* imagen del perro */}
-        <img src='https://wallpapershome.com/images/pages/pic_h/1533.jpg' alt='daece' className={formStyles.img_dog}></img>
+        <img src='https://cdn.onemars.net/sites/nutro_es_NkyIN_B9cV/image/204_1615968630478.jpeg' alt='daece' className={formStyles.img_dog}></img>
+        <form className={formStyles.form} onSubmit={(e) => updateData(e, inputs, temper, errors, setErrors, id)}>
+        <p className={formStyles.title_form}>Update Breed</p>
 
-        {/* inicio del form con la funcion para enviar la data */}
-        <form className={formStyles.form} onSubmit={(e) => postData(e, inputs, temper, errors, setErrors, setShowCreated)}>
-
-        <p className={formStyles.title_form}>Create Breed</p>
-
-        {/* input del nombre */}
         <div className={formStyles.inputcontainer}>
         <input name="name" type="text" value={inputs.name} onChange={(e) => handleChanges(e, setInputs, setErrors, inputs)}
         className={formStyles.input} placeholder="Race name..."/>
         </div>
 
-        {/* inputs de peso, altura y vida */}
         {divMinMax("minWeight", "maxWeight", "weight", inputs, setInputs, setErrors)}
 
         {divMinMax("minHeight", "maxHeight", "height", inputs, setInputs, setErrors)}
 
         {divMinMax("minLifeSpan", "maxLifeSpan", "life span", inputs, setInputs, setErrors)}
         
-        {/* busqueda de temperamentos por texto */}
         <div className={formStyles.inputcontainer}>
         <input name="temperament" type="text" value={inputs.temperament} onChange={(e) => searchTemperament(e, actualFormState, temper, setTemper, inputs, setInputs)}
         className={formStyles.input} placeholder="Write a temperament..."/>
         </div>
 
-        {/* input de imagen */}
         <div className={formStyles.inputcontainer}>
         <input name="image" type="text" value={inputs.image} onChange={(e) => handleChanges(e, setInputs, setErrors, inputs)}
         className={formStyles.input} placeholder="Image URL..."/>
         </div>
 
-        {/* boton de creacion */}
-        <button type="submit" className={formStyles.submit} >Create</button>
+        <button type="submit" className={formStyles.submit} >Update</button>
 
-        {/* errores */}
         {errorMessage(["name", "minWeight","maxWeight", "minHeight", "maxHeight","minLifeSpan","maxLifeSpan", "dataComplete", "image"], errors)}
         
         </form>
         
-        {/* seccion de temperamentos de la derecha */}
         <div className={formStyles.div_temp}>
-        <p className={formStyles.pTemp}>Temperaments:</p> {/* titulo */}
-
-        {/* si hay temperamentos guardados la funcion showTemperaments manda el boton correspondiente */}
+        <p className={formStyles.pTemp}>Temperaments:</p>
         {temper.length > 0 && showTemperaments(temper, setTemper, setInputs)}
-
-        {/* selector de temperamentos por lista */}
         <select className={formStyles.selectForm} name="select" id="mySelect" defaultValue="none" onClick={(e) => findTemperament(e, temper, setTemper)}>
             <option value="none">None</option>
-
-            {/* Pone como opciones todos los temperamentos existentes */}
            {actualFormState.map((temp, index) => <option key={index} value={`${temp.name}`}>{temp.name}</option>)}
         </select>
         </div>
-
-        {showCreated && <Redirect to={showCreated} />}
     </div>
     )
 }
 
-export default Form
+export default Update

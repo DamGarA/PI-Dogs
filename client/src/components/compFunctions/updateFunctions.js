@@ -103,7 +103,7 @@ const showTemperaments = (temper, setTemper, setInputs) => {
    
 }
 
-const postData = (e, inputs, temper, errors, setErrors, setShowCreated) => {
+const updateData = (e, inputs, temper, errors, setErrors, id) => {
     e.preventDefault()
     if (!Object.values(errors).some(Boolean) && inputs.minWeight && inputs.maxWeight && inputs.minHeight && inputs.maxHeight && inputs.minLifeSpan && inputs.maxLifeSpan && inputs.name)
     {
@@ -122,8 +122,8 @@ const postData = (e, inputs, temper, errors, setErrors, setShowCreated) => {
         body.image = inputs.image;
     }
 
-    fetch('http://localhost:3001/dogs', {
-        method: 'POST',
+    fetch(`http://localhost:3001/dogs/${id}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
     })
@@ -136,8 +136,8 @@ const postData = (e, inputs, temper, errors, setErrors, setShowCreated) => {
           }
           return res.json();
     })
-    .then(data => {      
-        setShowCreated(`/breedCreated/${data.dog.id}`)
+    .then(() => {      
+        window.location.href = "/home";
     })
     .catch((err) => {    
         setErrors({dataComplete: "BAD REQUEST: " + err.message})
@@ -152,4 +152,4 @@ const findTemperament = (e, temper, setTemper) => {
     select.value = "none"
 }
 
-export {validate, handleChanges, divMinMax, errorMessage, showTemperaments, searchTemperament, postData, findTemperament}
+export {validate, handleChanges, divMinMax, errorMessage, showTemperaments, searchTemperament, updateData, findTemperament}

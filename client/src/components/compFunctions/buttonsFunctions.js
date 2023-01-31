@@ -56,15 +56,19 @@ const sortByNameZtoA = (actualHomeState, setNotFound, dispatch) => {
     dispatch(addAllDogs(newArray))
 }
 
-const resetDogs = (dispatch, setNotFound, setPage, setValue) => {
+const resetDogs = (dispatch, setNotFound, setPage, setValue, filters) => {
   fetch('http://localhost:3001/dogs')
     .then(res => res.json())
     .then(dogs => {
-      dispatch(addAllDogs(dogs.lista))
-      dispatch(originalDogs(dogs.lista))
-      setNotFound(false)
-      setPage(1)
-      setValue(1)
+      filters[0] = "none";
+      filters[1] = "none";
+      filters[2] = "none-races";
+      filters[3] = "none-weight";
+      dispatch(addAllDogs(dogs.lista));
+      dispatch(originalDogs(dogs.lista));
+      setNotFound(false);
+      setPage(1);
+      setValue(1);
     })
 }
 
