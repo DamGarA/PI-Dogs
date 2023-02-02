@@ -38,7 +38,7 @@ function Pagination({page, setPage, max, value, setValue}) {
                 {/* Numeros de paginas para seleccionar */}
                 {newArray.map((numberPage, index) => {
 
-                    {/* Si la pagina a renderizar es la actual, sale un css pintado de verde, sino uno comun */}
+                    // Si la pagina a renderizar es la actual, sale un css pintado de verde, sino uno comun
                     if (numberPage === page) {
                         return <button key={index} className={pagCss.actualPage} value={numberPage} onClick={(e) => btnSelect(e, setPage, setValue, max)}>{numberPage}</button>
                     }

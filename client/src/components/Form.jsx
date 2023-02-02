@@ -37,7 +37,7 @@ function Form () {
         <p className={formStyles.title_form}>Create Breed</p>
 
         {/* input del nombre */}
-        <div className={formStyles.inputcontainer}>
+        <div>
         <input name="name" type="text" value={inputs.name} onChange={(e) => handleChanges(e, setInputs, setErrors, inputs)}
         className={formStyles.input} placeholder="Race name..."/>
         </div>
@@ -50,13 +50,13 @@ function Form () {
         {divMinMax("minLifeSpan", "maxLifeSpan", "life span", inputs, setInputs, setErrors)}
         
         {/* busqueda de temperamentos por texto */}
-        <div className={formStyles.inputcontainer}>
+        <div>
         <input name="temperament" type="text" value={inputs.temperament} onChange={(e) => searchTemperament(e, actualFormState, temper, setTemper, inputs, setInputs)}
         className={formStyles.input} placeholder="Write a temperament..."/>
         </div>
 
         {/* input de imagen */}
-        <div className={formStyles.inputcontainer}>
+        <div>
         <input name="image" type="text" value={inputs.image} onChange={(e) => handleChanges(e, setInputs, setErrors, inputs)}
         className={formStyles.input} placeholder="Image URL..."/>
         </div>
@@ -76,15 +76,17 @@ function Form () {
         {/* si hay temperamentos guardados la funcion showTemperaments manda el boton correspondiente */}
         {temper.length > 0 && showTemperaments(temper, setTemper, setInputs)}
 
-        {/* selector de temperamentos por lista */}
+        {/* selector de temperamentos por lista, con la funcion onclick para poner temperamentos en temper */}
         <select className={formStyles.selectForm} name="select" id="mySelect" defaultValue="none" onClick={(e) => findTemperament(e, temper, setTemper)}>
-            <option value="none">None</option>
+
+            <option value="none"></option>
 
             {/* Pone como opciones todos los temperamentos existentes */}
            {actualFormState.map((temp, index) => <option key={index} value={`${temp.name}`}>{temp.name}</option>)}
         </select>
         </div>
 
+        {/* Hace la redireccion al otro componente si postData tuvo exito */}
         {showCreated && <Redirect to={showCreated} />}
     </div>
     )

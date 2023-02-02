@@ -1,5 +1,6 @@
 import formStyles from "../../css modules/form.module.css"
 
+//valida y manda los errores
 function validate (inputs) {
     let errors = {};
     
@@ -54,11 +55,13 @@ function validate (inputs) {
     return errors
 }
 
+//cuando hay un cambio en el input se setea el valor y se llama a la funcion validate para ver si cumplen los requisitos
 const handleChanges = (e, setInputs, setErrors, inputs) => {
     setInputs({...inputs, [e.target.name]: e.target.value});
     setErrors(validate({...inputs, [e.target.name]: e.target.value}))
 }
 
+//inputs de peso, altura y vida
 const divMinMax = (minValue, maxValue, placeHolder, inputs, setInputs, setErrors) => {
     
     return (
@@ -73,44 +76,63 @@ const divMinMax = (minValue, maxValue, placeHolder, inputs, setInputs, setErrors
     )
 }
 
+//alerta de error
 const errorMessage = (errorValue, errors) => {
     return errorValue.map((val, index) => errors[val] && <p key={index} className={formStyles.warningP}>{errors[val]}</p>)
 }
 
+//manda los botones de los temperamentos que estan en temper
 const showTemperaments = (temper, setTemper, setInputs) => {
     return temper.map((tempName, index) => {
         return <button key={index} className={formStyles.temperamentBtn} onClick={() => deleteTemp(tempName, setTemper, setInputs, temper)}>{tempName}</button>
     })
  }
 
+ //la funcion que esta dentro de cada boton de temperamento para borrarlo (sacarlo de temper)
  const deleteTemp = (tempName, setTemper, setInputs,temper) => {
      setTemper(temper.filter(temp => temp !== tempName))
      setInputs(prevInputs => ({...prevInputs, temperament: ""}))
 
  }
 
+ //busqueda de temperamento por texto
  const searchTemperament = (e, actualFormState, temper, setTemper, inputs, setInputs) => {
     const tempTemperament = e.target.value;
+
+    //setea el valor en el input
     setInputs({...inputs, [e.target.name]: tempTemperament});
+
+    //por cada temperamento en el estado de redux, se busca la coincidencia con el valor enviado
     actualFormState?.forEach(temp => {
         if (temp.name.toUpperCase() === tempTemperament.toUpperCase()) {
+
+            //si conincide se pone la primer letra mayuscula y las otras minusculas para que coincidan con los del back
             const saveTemper = tempTemperament[0].toUpperCase() + tempTemperament.slice(1).toLowerCase()
+
+            //verifica que no exista ya en temper y establece una cantidad maxima de temperamentos por raza
             if (!temper.includes(saveTemper) && temper.length <= 9) {
+
+                //setea lo temperamentos
                 setTemper([...temper, `${saveTemper}`])
             }
         } 
     });
-   
 }
 
-const updateData = (e, inputs, temper, errors, setErrors, id) => {
+//envia la data para actualizar
+const updateData = (e, inputs, temper, errors, setErrors, id, setShowUpdate) => {
+    //evita que se actualice
     e.preventDefault()
+
+    //verifica que los errores esten todos vacios y que los inputs tengan valores
     if (!Object.values(errors).some(Boolean) && inputs.minWeight && inputs.maxWeight && inputs.minHeight && inputs.maxHeight && inputs.minLifeSpan && inputs.maxLifeSpan && inputs.name)
     {
+    //establece el formato de string para peso , altura y vida
     const weight = `${inputs.minWeight} - ${inputs.maxWeight}`;
     const height = `${inputs.minHeight} - ${inputs.maxHeight}`;
     const life_span = `${inputs.minLifeSpan} - ${inputs.maxLifeSpan}`;
 
+    //crea el body que se va a mandar
     const body = {
         name: inputs.name,
         weight,
@@ -118,15 +140,18 @@ const updateData = (e, inputs, temper, errors, setErrors, id) => {
         life_span,
         temperaments: temper,
     }
+    //si existe la imagen la suma al body
     if (inputs.image !== "") {
         body.image = inputs.image;
     }
 
+    //manda el PUT a la ruta indicada para actualizar
     fetch(`http://localhost:3001/dogs/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
     })
+    //si la respuesta tiene un ok == true devuelve el json, sino manda un error
     .then(res => {
         if (!res.ok) {
             return res.json().then(error => {
@@ -136,18 +161,31 @@ const updateData = (e, inputs, temper, errors, setErrors, id) => {
           }
           return res.json();
     })
+    //vuelve al home
     .then(() => {      
-        window.location.href = "/home";
+        const redirect = () => {
+            window.location.href = "/home";
+          };
+           //setea el texto para el usuario
+        setShowUpdate(true)
+        //En 3 seg. se redirige al home
+        setTimeout(redirect, 3000)
     })
+    //controla el error del fetch
     .catch((err) => {    
         setErrors({dataComplete: "BAD REQUEST: " + err.message})
     })
-    }
+    } //si no se cumplen lo requisitos de error y de inputs, setea un error
     else setErrors({dataComplete:"Invalid data"})
 }
-
+ 
+//es la funcion que usa el select para sumar temperamentos
 const findTemperament = (e, temper, setTemper) => {
+
+    //si el valor no es "none" y no esta incluido en los temperamentos existentes y no sobrepasa el limite, se setea el temperamento
     if (e.target.value !== "none" && !temper.includes(e.target.value) && temper.length <= 9) setTemper([...temper, e.target.value]);
+
+    //vuelve a setear en none el select
     const select = document.getElementById("mySelect");
     select.value = "none"
 }

@@ -1,104 +1,113 @@
 @font-face {
-    font-family: 'aAlloyInk';
-    src: url('./others/aAlloyInk.ttf') format('truetype');
+  font-family: 'aAlloyInk';
+  src: url('./others/aAlloyInk.ttf') format('truetype');
 }
 
 .allDetail {
-    display: flex;
-    flex-direction: row;
-    background-color: skyblue;
-    background-image: url('./others/fondo\ huellas\ de\ perro.webp');
-    background-size: cover;
-    height: 100vh;
+  display: flex;
+  flex-direction: row;
+  background-color: skyblue;
+  background-image: url('./others/fondo\ huellas\ de\ perro.webp');
+  background-size: cover;
+  height: 100vh;
 }
 
 .detailTitle {
-    font-family: 'aAlloyInk';
-    font-size: 50px;
+  font-family: 'aAlloyInk';
+  font-size: 50px;
 }
 
 .detailAttributes {
-    display: flex;
-    flex-direction: column;
-    max-height: 100vh;
-    width: 100%;
-    text-align: center;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  width: 100%;
+  text-align: center;
+  justify-content: space-between;
 }
 
 .p_detail_title {
-    font-family: 'aAlloyInk';
-    font-size: xx-large;
-    margin-bottom: 0px;
-    margin-top: 1px;
+  font-family: 'aAlloyInk';
+  font-size: xx-large;
+  margin-bottom: 0px;
+  margin-top: 1px;
 }
 
 .p_detail_value {
-    font-family: 'aAlloyInk';
-    font-size: x-large;
-    color: #17a3ad;
-    margin-top: 5px;
+  font-family: 'aAlloyInk';
+  font-size: x-large;
+  color: #17a3ad;
+  margin-top: 5px;
 }
 
 .detail_img {
-    max-width: 60%;
+  max-width: 60%;
 }
 
 .deleteBtn {
-    background-image: radial-gradient(100% 100% at 100% 0, #17a3ad 0, #7fd0d6 100%);
-    border: 0;
-    border-radius: 6px;
-    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
-    color: #fff;
-    cursor: pointer;
-    font-family: "aAlloyInk",monospace;
-    height: 30px;
-    padding-left: 16px;
-    padding-right: 16px;
-    transition: box-shadow .15s,transform .15s;
-    font-size: 10px;
-    align-items: center;
-    width: 181px;
-    position: absolute;
-  }
+  background-image: radial-gradient(100% 100% at 100% 0, #17a3ad 0, #7fd0d6 100%);
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  color: #fff;
+  cursor: pointer;
+  font-family: "aAlloyInk",monospace;
+  height: 30px;
+  padding-left: 16px;
+  padding-right: 16px;
+  transition: box-shadow .15s,transform .15s;
+  font-size: 10px;
+  align-items: center;
+  width: 181px;
+  position: absolute;
+  border: 0;
+}
     
-  .deleteBtn:hover {
-    box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #17a3ad 0 -3px 0 inset;
-    transform: translateY(-2px);
-  }
+.deleteBtn:hover {
+  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #17a3ad 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
     
-  .deleteBtn:active {
-    box-shadow: #17a3ad 0 3px 7px inset;
-    transform: translateY(2px);
-  }
-  
+.deleteBtn:active {
+  box-shadow: #17a3ad 0 3px 7px inset;
+  transform: translateY(2px);
+}
 
-  .updateBtn {
-    background-image: radial-gradient(100% 100% at 100% 0, #17a3ad 0, #7fd0d6 100%);
-    border: 0;
-    border-radius: 6px;
-    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
-    color: #fff;
-    cursor: pointer;
-    font-family: "aAlloyInk",monospace;
-    height: 30px;
-    padding-left: 16px;
-    padding-right: 16px;
-    transition: box-shadow .15s,transform .15s;
-    font-size: 10px;
-    align-items: center;
-    width: 181px;
-    position: absolute;
-    top: 77px;
-    left: 0px;
-  }
+.updateBtn {
+  background-image: radial-gradient(100% 100% at 100% 0, #17a3ad 0, #7fd0d6 100%);
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  color: #fff;
+  cursor: pointer;
+  font-family: "aAlloyInk",monospace;
+  height: 30px;
+  padding-left: 16px;
+  padding-right: 16px;
+  transition: box-shadow .15s,transform .15s;
+  font-size: 10px;
+  align-items: center;
+  width: 181px;
+  position: absolute;
+  top: 77px;
+  left: 0px;
+  border: 0;
+}
     
-  .updateBtn:hover {
-    box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #17a3ad 0 -3px 0 inset;
-    transform: translateY(-2px);
-  }
+.updateBtn:hover {
+  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #17a3ad 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
     
-  .updateBtn:active {
-    box-shadow: #17a3ad 0 3px 7px inset;
-    transform: translateY(2px);
-  }
+.updateBtn:active {
+  box-shadow: #17a3ad 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+.deleteAlert {
+  position: absolute;
+  background-color: rgb(7, 227, 7);
+  top: 200px;
+  left: 370px;
+  font-size: 70px;
+  border-radius: 20px;
+  border: solid 4px black;
+}

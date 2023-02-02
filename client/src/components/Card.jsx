@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import cardCss from "../css modules/card.module.css"
 
 function Card ({name, image, temperaments, weight, id}) {
+    //hay algunos perros que no tienen peso, por eso esta verificacion
     if (isNaN(weight.substr(0,1))) weight = "Unknown"
     return (
             <div className={cardCss.card}>

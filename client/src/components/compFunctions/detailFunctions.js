@@ -1,16 +1,22 @@
-const deleteBreed = async (id) => {
+const redirect = () => {
+  window.location.href = "/home";
+};
+
+const deleteBreed = async (id, setShowDelete) => {
     try {
-        const response = await fetch(`http://localhost:3001/dogs/${id}`, {
+      //manda el fetch para que se borre
+         await fetch(`http://localhost:3001/dogs/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json"
           }
         });
-        const data = await response.json();
-        window.location.href = "/home";
-        return data;
+        //setea el texto para el usuario
+        setShowDelete(true)
+        //En 3 seg. se redirige al home
+        setTimeout(redirect, 3000)
       } catch (error) {
-        console.error(error);
+        setShowDelete("Error!")
       }
 }
 

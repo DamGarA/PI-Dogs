@@ -23,12 +23,6 @@
   margin: 0px;
 }
 
-.input-container {
-  height: 120px;
-  position: relative;
-  width: 100%;
-}
-
 .input_half {
   width: 50%;
   float: left;
@@ -47,7 +41,6 @@
   margin: 10px 0px;
 }
 
-
 .input::placeholder {
   border-color: red;
 }
@@ -62,9 +55,9 @@
   font-size: 25px;
   font-weight: 700;
   height: 50px;
-  outline: 0;
   text-align: center;
   width: 100%;
+  cursor: pointer;
 }
   
 .submit:active {
@@ -152,4 +145,14 @@
   flex-direction: row;
   background-color: skyblue;
   height: 100vh;
+}
+
+.updateAlert {
+  position: absolute;
+  background-color: rgb(7, 227, 7);
+  top: 200px;
+  left: 260px;
+  font-size: 70px;
+  border-radius: 20px;
+  border: solid 4px black;
 }

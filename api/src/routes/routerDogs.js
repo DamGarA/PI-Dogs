@@ -11,10 +11,12 @@ const router = Router();
 router.get("/", async (req, res) => {
     const { name } = req.query
     try {
+        //si no recibe el nombre manda todos los perros
        if (!name) {
          const allDogs = await getDogs()
         res.json({message: "Todos los perros", lista: allDogs}) 
     } else {
+        //si recibe el nombre, lo busca
         const raceDogs = await getRace(name)
         res.json({message: 'Resultados de la busqueda', lista: raceDogs}) 
     }

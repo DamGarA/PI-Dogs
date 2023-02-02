@@ -27,11 +27,25 @@ module.exports = (sequelize) => {
     },
     weight: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isHeightValid(value) {
+          if (!/^(\d{1,2})\s-\s(\d{1,2})$/.test(value)) {
+            throw new Error('Incorrect format');
+          }
+        }
+      }
     },
     life_span: {
       type: DataTypes.STRING,
-      defaultValue: "Unknown"
+      defaultValue: "Unknown",
+      validate: {
+        isHeightValid(value) {
+          if (!/^(\d{1,2})\s-\s(\d{1,2})$/.test(value)) {
+            throw new Error('Incorrect format');
+          }
+        }
+      }
     },
     image: {
       type: DataTypes.STRING,

@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'aAlloyInk';
     src: url('./others/aAlloyInk.ttf') format('truetype');
-  }
+}
 
 .filter_box {
     display: flex;
@@ -11,6 +11,7 @@
 }
 
 .filter_label {
+    padding-top: 10px;
     font-family: 'aAlloyInk';
     background-color: #2ac3ce;
     font-size: large;
@@ -20,11 +21,12 @@
     height: 45px;
     color: black;
     margin: auto;
+    text-align: center;
 }
 
 .each_filter {
     color: #2ac3ce;
-    margin-top: 40px;
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
 }

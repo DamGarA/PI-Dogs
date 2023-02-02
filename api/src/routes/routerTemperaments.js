@@ -14,5 +14,15 @@ router.get('/', async (req, res) => {
     }
 })
 
+// router.get('/', (req, res) => {
+//     getTemperaments()
+//     .then(temperamentsList => {
+//         res.json({message: "Temperament list", temperaments: temperamentsList})
+//     })
+//     .catch(error => {
+//         res.status(404).json({error: error.message})
+//     })
+// })
+
 
 module.exports = router;
